@@ -24,7 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "activities" : MessageLookupByLibrary.simpleMessage("アクティビティ"),
     "add" : MessageLookupByLibrary.simpleMessage("追加"),
     "addComment" : MessageLookupByLibrary.simpleMessage("コメントを追加.."),
-    "appTitle" : MessageLookupByLibrary.simpleMessage("インスタグラム"),
+    "appTitle" : MessageLookupByLibrary.simpleMessage("Instagram"),
     "camera" : MessageLookupByLibrary.simpleMessage("カメラ"),
     "cancel" : MessageLookupByLibrary.simpleMessage("キャンセル"),
     "cancelConfirm" : MessageLookupByLibrary.simpleMessage("キャンセルしますか？"),
