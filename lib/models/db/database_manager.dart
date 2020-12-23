@@ -16,7 +16,13 @@ class DatabaseManager {
     return false;
   }
 
-  Future<void> insertUser(User user) async{
+  Future<void> insertUser(User user) async {
     await _db.collection("users").doc(user.userId).set(user.toMap());
+  }
+
+  Future<User> getUserInfoFromDbById(String userId) async {
+    final query =
+        await _db.collection("users").where("userId", isEqualTo: userId).get();
+    return User.fromMap(query.docs[0].data());
   }
 }

@@ -8,12 +8,15 @@ class UserRepository {
 
   UserRepository({this.dbManager});
 
+  static User currentUser;
+
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<bool> isSignIn() async {
     final firebaseUser = _auth.currentUser;
     if (firebaseUser != null) {
+      currentUser = await dbManager.getUserInfoFromDbById(firebaseUser.uid);
       return true;
     }
     return false;
@@ -34,15 +37,16 @@ class UserRepository {
         return false;
       }
 
-      //todo DBに登録
       final isUserExistedInDb = await dbManager.searchUserInDb(firebaseUser);
       if(!isUserExistedInDb){
         await dbManager.insertUser(_convertToUser(firebaseUser));
       }
-
+      currentUser = await dbManager.getUserInfoFromDbById(firebaseUser.uid);
+      return true;
+    }catch(error){
+      print("sign in error caught!: ${error.toString()}");
+      return false;
     }
-
-
   }
 
   _convertToUser(auth.User firebaseUser) {
