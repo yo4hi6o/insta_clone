@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:insta_clone/data_models/user.dart';
 
 class DatabaseManager {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -13,5 +14,9 @@ class DatabaseManager {
       return true;
     }
     return false;
+  }
+
+  Future<void> insertUser(User user) async{
+    await _db.collection("users").doc(user.userId).set(user.toMap());
   }
 }
