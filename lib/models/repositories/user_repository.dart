@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/models/db/database_manager.dart';
 
 class UserRepository {
@@ -35,9 +36,23 @@ class UserRepository {
 
       //todo DBに登録
       final isUserExistedInDb = await dbManager.searchUserInDb(firebaseUser);
+      if(!isUserExistedInDb){
+        await dbManager.insertUser(_convertToUser(firebaseUser));
+      }
 
     }
 
 
+  }
+
+  _convertToUser(auth.User firebaseUser) {
+    return User(
+      userId: firebaseUser.uid,
+      displayName: firebaseUser.displayName,
+      inAppUserName: firebaseUser.displayName,
+      photoUrl: firebaseUser.photoURL,
+      email:firebaseUser.email,
+      bio: "",
+    );
   }
 }
