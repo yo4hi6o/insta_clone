@@ -15,4 +15,8 @@ class UserRepository {
     return false;
   }
 
+  Future<bool> signIn() async{
+
+  }
+
 }
