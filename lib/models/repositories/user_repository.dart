@@ -34,6 +34,8 @@ class UserRepository {
       }
 
       //todo DBに登録
+      final isUserExistedInDb = await dbManager.searchUserInDb(firebaseUser);
+
     }
 
 
