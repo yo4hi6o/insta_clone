@@ -44,7 +44,7 @@ class UserRepository {
       }
       currentUser = await dbManager.getUserInfoFromDbById(firebaseUser.uid);
       return true;
-    } on PlatformException catch(error){
+    } catch(error){
       print("sign in error caught!: ${error.toString()}");
       return false;
     }
