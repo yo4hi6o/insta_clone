@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/models/db/database_manager.dart';
@@ -43,7 +44,7 @@ class UserRepository {
       }
       currentUser = await dbManager.getUserInfoFromDbById(firebaseUser.uid);
       return true;
-    }catch(error){
+    } on PlatformException catch(error){
       print("sign in error caught!: ${error.toString()}");
       return false;
     }
