@@ -33,6 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         currentIndex: _currentIndex,
         onTap: (index){
           setState(() {
@@ -42,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.home),
-            label: "トップニュース",
+            label: "ホーム",
           ),
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.search),
