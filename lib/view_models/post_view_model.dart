@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:insta_clone/data_models/location.dart';
 import 'package:insta_clone/models/repositories/post_repository.dart';
 import 'package:insta_clone/models/repositories/user_repository.dart';
 import 'package:insta_clone/utils/constants.dart';
@@ -14,6 +15,8 @@ class PostViewModel extends ChangeNotifier {
 
   File imageFile;
 
+  Location location;
+
   bool isProcessing = false;
   bool isImagePicked = false;
 
@@ -25,7 +28,8 @@ class PostViewModel extends ChangeNotifier {
     imageFile = await postRepository.pickImage(uploadType);
     print("pickedImage: ${imageFile.path}");
 
-    //todo 位置情報
+    location = await postRepository.getCurrentLocation();
+
 
     if(imageFile != null) isImagePicked = true;
     isProcessing = false;

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:insta_clone/data_models/location.dart';
 import 'package:insta_clone/models/db/database_manager.dart';
 import 'package:insta_clone/models/location/location_manager.dart';
 import 'package:insta_clone/utils/constants.dart';
@@ -22,6 +23,10 @@ class PostRepository {
       final pickedImage = await imagePicker.getImage(source: ImageSource.camera);
       return File(pickedImage.path);
     }
+  }
+
+  Future<Location> getCurrentLocation() async{
+    return await locationManager.getCurrentLocation();
   }
   //todo
 }
