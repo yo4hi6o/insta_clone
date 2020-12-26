@@ -20,34 +20,55 @@ class PostUploadScreen extends StatelessWidget {
     return Consumer<PostViewModel>(
       builder: (context, model, child) {
         return Scaffold(
-          appBar: AppBar(
-            leading: model.isProcessing
-                ? Container()
-                : IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: _cancelPost(context),
-                  ),
-            title: model.isProcessing
-                ? Text(S.of(context).underProcessing)
-                : Text(S.of(context).post),
-            actions: <Widget>[
-              (model.isProcessing || !model.isImagePicked)
-                  ? IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: _cancelPost(context),
-                    )
+            appBar: AppBar(
+              leading: model.isProcessing
+                  ? Container()
                   : IconButton(
-                      icon: Icon(Icons.done),
-                      //todo ダイアログを出して投稿処理
-                      onPressed: null,
-                    )
-            ],
-          ),
-        );
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () => _cancelPost(context),
+                    ),
+              title: model.isProcessing
+                  ? Text(S.of(context).underProcessing)
+                  : Text(S.of(context).post),
+              actions: <Widget>[
+                (model.isProcessing || !model.isImagePicked)
+                    ? IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () => _cancelPost(context),
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.done),
+                        //todo ダイアログを出して投稿処理
+                        onPressed: null,
+                      )
+              ],
+            ),
+            body: model.isProcessing
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : model.isImagePicked
+                    ? Column(
+                        children: <Widget>[
+                          Divider(),
+                          //todo
+                          //PostCaptionPart(),
+                          Divider(),
+                          //todo
+                          //PostLocationPart(),
+                          Divider(),
+                        ],
+                      )
+                    : Container());
       },
     );
   }
 
 //todo
-  _cancelPost(BuildContext context) {}
+  _cancelPost(BuildContext context) {
+
+    //todo viewmodel#cancelPost
+
+    Navigator.pop(context);
+  }
 }
