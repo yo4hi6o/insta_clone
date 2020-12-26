@@ -16,6 +16,7 @@ class PostViewModel extends ChangeNotifier {
   File imageFile;
 
   Location location;
+  String locationString = "";
 
   bool isProcessing = false;
   bool isImagePicked = false;
@@ -29,12 +30,18 @@ class PostViewModel extends ChangeNotifier {
     print("pickedImage: ${imageFile.path}");
 
     location = await postRepository.getCurrentLocation();
+    locationString = _toLocationString(location);
+    print("location: $locationString");
 
 
     if(imageFile != null) isImagePicked = true;
     isProcessing = false;
     notifyListeners();
 
+  }
+
+  String _toLocationString(Location location) {
+    return location.country + " " + location.state + " " + location.city;
   }
 
 
