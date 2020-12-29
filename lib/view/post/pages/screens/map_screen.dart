@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:insta_clone/data_models/location.dart';
+import 'package:insta_clone/generated/l10n.dart';
+
+class MapScreen extends StatefulWidget {
+  final Location location;
+  MapScreen({this.location});
+
+  @override
+  _MapScreenState createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+
+  LatLng _latLng;
+  CameraPosition _cameraPosition;
+  GoogleMapController _mapController;
+
+  @override
+  void initState() {
+    _latLng = LatLng(widget.location.latitude, widget.location.longtude);
+    _cameraPosition = CameraPosition(target: _latLng, zoom: 15.0);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(S.of(context).selectPlace),
+        actions:<Widget> [
+          IconButton(icon: Icon(Icons.done),
+              //todo
+              onPressed: null,
+          )
+        ],
+      ),
+      body: GoogleMap(
+        initialCameraPosition: _cameraPosition,
+        onMapCreated: onMapCreated,
+      ),
+    );
+  }
+
+  void onMapCreated(GoogleMapController controller) {
+    _mapController = controller;
+  }
+}
