@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:insta_clone/data_models/location.dart';
 import 'package:insta_clone/generated/l10n.dart';
+import 'package:insta_clone/view_models/post_view_model.dart';
+import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
   final Location location;
@@ -32,8 +34,7 @@ class _MapScreenState extends State<MapScreen> {
         title: Text(S.of(context).selectPlace),
         actions:<Widget> [
           IconButton(icon: Icon(Icons.done),
-              //todo
-              onPressed: null,
+              onPressed: () => _onPlaceSelected(),
           )
         ],
       ),
@@ -62,5 +63,12 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       _markers[markerId] = marker;
     });
+  }
+
+  _onPlaceSelected() async{
+    final postViewModel = Provider.of<PostViewModel>(context, listen: false);
+    await postViewModel.updateLocation(_latLng.latitude, _latLng.longitude);
+    Navigator.pop(context);
+
   }
 }
