@@ -16,6 +16,7 @@ class _MapScreenState extends State<MapScreen> {
   LatLng _latLng;
   CameraPosition _cameraPosition;
   GoogleMapController _mapController;
+  Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
 
   @override
   void initState() {
@@ -39,11 +40,27 @@ class _MapScreenState extends State<MapScreen> {
       body: GoogleMap(
         initialCameraPosition: _cameraPosition,
         onMapCreated: onMapCreated,
+        onTap: onMapTapped,
+        markers: Set<Marker>.of(_markers.values),
       ),
     );
   }
 
   void onMapCreated(GoogleMapController controller) {
     _mapController = controller;
+  }
+
+  void onMapTapped(LatLng latLng) {
+    print("selected Place: $latLng");
+    _latLng = latLng;
+    _createMarker(_latLng);
+  }
+
+  void _createMarker(LatLng latLng) {
+    final markerId = MarkerId("selected");
+    final marker =Marker(markerId: markerId, position: latLng);
+    setState(() {
+      _markers[markerId] = marker;
+    });
   }
 }
