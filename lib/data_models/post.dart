@@ -83,16 +83,18 @@ class Post {
 
   factory Post.fromMap(Map<String, dynamic> map) {
     return new Post(
-      postId: map['postId'] as String,
-      userId: map['userId'] as String,
-      imageUrl: map['imageUrl'] as String,
-      imageStoragePath: map['imageStoragePath'] as String,
-      caption: map['caption'] as String,
-      locationString: map['locationString'] as String,
-      latitude: map['latitude'] as double,
-      longitude: map['longitude'] as double,
-      postDateTime: map['postDateTime'] as DateTime,
-    );
+        postId: map['postId'] as String,
+        userId: map['userId'] as String,
+        imageUrl: map['imageUrl'] as String,
+        imageStoragePath: map['imageStoragePath'] as String,
+        caption: map['caption'] as String,
+        locationString: map['locationString'] as String,
+        latitude: map['latitude'] as double,
+        longitude: map['longitude'] as double,
+        //postDateTime: map['postDateTime'] as DateTime,
+        postDateTime: map['postDateTime'] == null
+            ? null
+            : DateTime.parse(map["postDateTime"] as String));
   }
 
   Map<String, dynamic> toMap() {
@@ -106,7 +108,7 @@ class Post {
       'locationString': this.locationString,
       'latitude': this.latitude,
       'longitude': this.longitude,
-      'postDateTime': this.postDateTime,
+      'postDateTime': this.postDateTime.toIso8601String(),
     } as Map<String, dynamic>;
   }
 
