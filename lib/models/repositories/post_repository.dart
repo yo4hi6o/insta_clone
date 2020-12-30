@@ -7,6 +7,7 @@ import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/models/db/database_manager.dart';
 import 'package:insta_clone/models/location/location_manager.dart';
 import 'package:insta_clone/utils/constants.dart';
+import 'package:uuid/uuid.dart';
 
 class PostRepository {
   final DatabaseManager dbManager;
@@ -38,6 +39,8 @@ class PostRepository {
 
   Future<void> post(User currentUser, File imageFile, String caption, Location location,
       String locationString) async {
-    //todo
+    final storageId = Uuid().v1();
+    final imageUrl = await dbManager.uploadImageToStorage(imageFile, storageId);
+    print("storageImageUrl: $imageUrl");
   }
 }
