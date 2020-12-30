@@ -57,6 +57,8 @@ dependencies:
 
   google_maps_flutter: ^1.0.6
 
+  uuid: ^2.2.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
