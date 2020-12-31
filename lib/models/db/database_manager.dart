@@ -46,7 +46,21 @@ class DatabaseManager {
     final query = await _db.collection("posts").get();
     if (query.docs.length == 0) return List();
 
+    var userIds = await getFollowingUserIds(userId);
+    userIds.add(userId);
 
+
+  }
+
+  Future <List<String>> getFollowingUserIds(String userId) async{
+    final query = await _db.collection("users").doc(userId).collection("followings").get();
+    if (query.docs.length == 0) return List();
+
+    var userIds = List<String>();
+    query.docs.forEach((id) {
+      userIds.add(id.data()["userId"]);
+    });
+    return userIds;
   }
 
   //todo
