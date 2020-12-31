@@ -40,4 +40,15 @@ class DatabaseManager {
   Future<void> insertPost(Post post) async{
     await _db.collection("posts").doc(post.postId).set(post.toMap());
   }
+
+  Future<List<Post>> getPostMineAndFollowings(String userId) async{
+    //データの有無を判定
+    final query = await _db.collection("posts").get();
+    if (query.docs.length == 0) return List();
+
+
+  }
+
+  //todo
+  //Future<List<Post>> getPostsByUser(String userId) {}
 }

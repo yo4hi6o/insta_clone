@@ -58,11 +58,11 @@ class PostRepository {
 
   Future<List<Post>> getPosts(FeedMode feedMode, User feedUser) async{
     if (feedMode == FeedMode.FROM_FEED){
-      //todo 自分+フォローしているユーザーの投稿を取得
-      return
+      // 自分+フォローしているユーザーの投稿を取得
+      return dbManager.getPostMineAndFollowings(feedUser.userId);
     } else{
-      //todo プロフィール画面に表示されているユーザーの投稿を取得
-      return
+      // プロフィール画面に表示されているユーザーの投稿を取得
+      //return dbManager.getPostsByUser(feedUser.userId);
     }
   }
 }
