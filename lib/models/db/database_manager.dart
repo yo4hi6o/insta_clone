@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
 
 class DatabaseManager {
@@ -34,5 +35,9 @@ class DatabaseManager {
     final storageRef = FirebaseStorage.instance.ref().child(storageId);
     final uploadTask = storageRef.putFile(imageFile);
     return await(await uploadTask.onComplete).ref.getDownloadURL();
+  }
+
+  Future<void> insertPost(Post post) async{
+    await _db.collection("posts").doc(post.postId).set(post.toMap());
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:insta_clone/data_models/location.dart';
+import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/models/db/database_manager.dart';
 import 'package:insta_clone/models/location/location_manager.dart';
@@ -37,10 +38,21 @@ class PostRepository {
     return await locationManager.updateLocation(latitude, longitude);
   }
 
-  Future<void> post(User currentUser, File imageFile, String caption, Location location,
-      String locationString) async {
+  Future<void> post(User currentUser, File imageFile, String caption,
+      Location location, String locationString) async {
     final storageId = Uuid().v1();
     final imageUrl = await dbManager.uploadImageToStorage(imageFile, storageId);
-    print("storageImageUrl: $imageUrl");
+    final post = Post(
+      postId: Uuid().v1(),
+      userId: currentUser.userId,
+      imageUrl: imageUrl,
+      imageStoragePath: storageId,
+      caption: caption,
+      locationString: locationString,
+      latitude: location.latitude,
+      longitude: location.longtude,
+      postDateTime: DateTime.now(),
+    );
+    await dbManager.insertPost(post);
   }
 }
