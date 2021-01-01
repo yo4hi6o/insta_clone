@@ -36,5 +36,9 @@ class FeedViewModel extends ChangeNotifier {
 
   }
 
+  Future<User> getPostUserInfo(String userId) async{
+    return await userRepository.getUserById(userId);
+  }
+
 
 }
