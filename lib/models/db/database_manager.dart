@@ -27,21 +27,21 @@ class DatabaseManager {
 
   Future<User> getUserInfoFromDbById(String userId) async {
     final query =
-        await _db.collection("users").where("userId", isEqualTo: userId).get();
+    await _db.collection("users").where("userId", isEqualTo: userId).get();
     return User.fromMap(query.docs[0].data());
   }
 
-  Future <String> uploadImageToStorage(File imageFile, String storageId) async{
+  Future <String> uploadImageToStorage(File imageFile, String storageId) async {
     final storageRef = FirebaseStorage.instance.ref().child(storageId);
     final uploadTask = storageRef.putFile(imageFile);
     return await(await uploadTask.onComplete).ref.getDownloadURL();
   }
 
-  Future<void> insertPost(Post post) async{
+  Future<void> insertPost(Post post) async {
     await _db.collection("posts").doc(post.postId).set(post.toMap());
   }
 
-  Future<List<Post>> getPostMineAndFollowings(String userId) async{
+  Future<List<Post>> getPostMineAndFollowings(String userId) async {
     //データの有無を判定
     final query = await _db.collection("posts").get();
     if (query.docs.length == 0) return List();
@@ -49,11 +49,20 @@ class DatabaseManager {
     var userIds = await getFollowingUserIds(userId);
     userIds.add(userId);
 
-
+    var results = List<Post>();
+    await _db.collection("posts").where("userId", whereIn: userIds).orderBy(
+        "postDateTime", descending: true).get().then((value) {
+          value.docs.forEach((element) {
+            results.add(Post.fromMap(element.data()));
+          });
+        });
+    print("posts: $results");
+    return results;
   }
 
-  Future <List<String>> getFollowingUserIds(String userId) async{
-    final query = await _db.collection("users").doc(userId).collection("followings").get();
+  Future <List<String>> getFollowingUserIds(String userId) async {
+    final query = await _db.collection("users").doc(userId).collection(
+        "followings").get();
     if (query.docs.length == 0) return List();
 
     var userIds = List<String>();
@@ -63,6 +72,6 @@ class DatabaseManager {
     return userIds;
   }
 
-  //todo
-  //Future<List<Post>> getPostsByUser(String userId) {}
+//todo
+//Future<List<Post>> getPostsByUser(String userId) {}
 }
