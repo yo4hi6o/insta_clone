@@ -59,6 +59,8 @@ dependencies:
 
   uuid: ^2.2.2
 
+  cached_network_image: ^2.5.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
