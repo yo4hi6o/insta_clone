@@ -20,4 +20,8 @@ const userCardSubTitleTextStyle = TextStyle(
   fontFamily: RegularFont, fontSize: 12.0
 );
 
+const numberOfLikesTextStyle = TextStyle(
+  fontFamily: RegularFont, fontSize: 12.0
+);
+
 
