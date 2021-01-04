@@ -16,10 +16,12 @@ class PostCaptionPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final postViewModel = Provider.of<PostViewModel>(context);
-    final image = Image.file(postViewModel.imageFile);
 
     if (from == PostCaptionOpenMode.FROM_POST) {
+      final postViewModel = Provider.of<PostViewModel>(context);
+      final image = Image.file(postViewModel.imageFile);
+
+
       return ListTile(
         leading: HeroImage(
           image: image,
