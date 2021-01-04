@@ -41,7 +41,10 @@ class FeedPostTile extends StatelessWidget {
                   imageUrl: post.imageUrl,
                 ),
                 FeedPostLikesPart(),
-                FeedPostCommentsPart(),
+                FeedPostCommentsPart(
+                  postUser: postUser,
+                  post: post,
+                ),
               ],
             );
           } else {

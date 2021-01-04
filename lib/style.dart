@@ -32,5 +32,13 @@ const timeAgoTextStyle = TextStyle(
     fontFamily: RegularFont, fontSize: 9.0, color: Colors.grey
 );
 
+const commentNameTextStyle = TextStyle(
+    fontFamily: BoldFont, fontSize: 11.0
+);
+
+const commentContentTextStyle = TextStyle(
+    fontFamily: RegularFont, fontSize: 11.0
+);
+
 
 
