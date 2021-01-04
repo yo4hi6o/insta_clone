@@ -24,4 +24,13 @@ const numberOfLikesTextStyle = TextStyle(
   fontFamily: RegularFont, fontSize: 12.0
 );
 
+const numberOfCommentsTextStyle = TextStyle(
+    fontFamily: RegularFont, fontSize: 11.0, color: Colors.grey
+);
+
+const timeAgoTextStyle = TextStyle(
+    fontFamily: RegularFont, fontSize: 9.0, color: Colors.grey
+);
+
+
 
