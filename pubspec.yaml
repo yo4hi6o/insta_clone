@@ -61,6 +61,8 @@ dependencies:
 
   cached_network_image: ^2.5.0
 
+  timeago: ^2.0.29
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

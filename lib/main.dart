@@ -10,7 +10,12 @@ import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
 
+import 'package:timeago/timeago.dart' as timeAgo;
+
 void main() async {
+
+  timeAgo.setLocaleMessages("ja", timeAgo.JaMessages());
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();

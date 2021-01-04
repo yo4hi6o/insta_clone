@@ -3,6 +3,7 @@ import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/style.dart';
+import 'package:insta_clone/utils/functions.dart';
 import 'package:insta_clone/view/feed/components/comment_rich_text.dart';
 
 class FeedPostCommentsPart extends StatelessWidget {
@@ -15,7 +16,7 @@ class FeedPostCommentsPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:<Widget> [
@@ -31,7 +32,10 @@ class FeedPostCommentsPart extends StatelessWidget {
                 "0 ${S.of(context).comments}", style: numberOfCommentsTextStyle,
               ),
           ),
-          Text("○時間前", style: timeAgoTextStyle,
+          Text(
+            createTimeAgoString(post.postDateTime),
+            style: timeAgoTextStyle,
+
           ),
         ],
       ),
