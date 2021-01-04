@@ -19,18 +19,21 @@ class FeedPostEditScreen extends StatelessWidget {
       appBar: AppBar(
         //todo
       ),
-      body: Column(
-        children: <Widget>[
-          UserCard(
-            photoUrl: postUser.photoUrl,
-            title: postUser.inAppUserName,
-            subTitle: post.locationString,
-            onTap: null,
-          ),
-          PostCaptionPart(
-            from: PostCaptionOpenMode.FROM_FEED,
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            UserCard(
+              photoUrl: postUser.photoUrl,
+              title: postUser.inAppUserName,
+              subTitle: post.locationString,
+              onTap: null,
+            ),
+            PostCaptionPart(
+              from: PostCaptionOpenMode.FROM_FEED,
+              post: post,
+            )
+          ],
+        ),
       ),
     );
   }
