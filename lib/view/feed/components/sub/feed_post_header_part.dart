@@ -5,6 +5,7 @@ import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/utils/constants.dart';
 import 'package:insta_clone/view/common/components/user_card.dart';
 import 'package:insta_clone/view/feed/screens/feed_post_edit_screen.dart';
+import 'package:share/share.dart';
 
 class FeedPostHeaderPart extends StatelessWidget {
   final User postUser;
@@ -72,6 +73,11 @@ class FeedPostHeaderPart extends StatelessWidget {
                     feedMode: feedMode,
                   )),
         );
+        break;
+      case PostMenu.SHARE:
+        Share.share(post.imageUrl, subject: post.caption);
+        break;
+
     }
   }
 }
