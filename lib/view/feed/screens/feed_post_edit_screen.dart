@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
+import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/utils/constants.dart';
 import 'package:insta_clone/view/common/components/user_card.dart';
+import 'package:insta_clone/view/common/dialog/confirm_dialog.dart';
 import 'package:insta_clone/view/post/components/post_caption_part.dart';
+import 'package:insta_clone/view_models/feed_view_model.dart';
+import 'package:provider/provider.dart';
 
 class FeedPostEditScreen extends StatelessWidget {
   final Post post;
@@ -18,6 +22,20 @@ class FeedPostEditScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         //todo
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.done),
+              onPressed: () => showConfirmDialog(
+                  context: context,
+                  title: S.of(context).editPost,
+                  content: S.of(context).editPostConfirm,
+                  onConfirmed: (isConfirmed){
+                    if(isConfirmed){}
+                    _updatePost(context);
+
+
+                  },),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -36,5 +54,11 @@ class FeedPostEditScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _updatePost(BuildContext context) async{
+    final feedViewModel = Provider.of<FeedViewModel>(context, listen: false);
+    await feedViewModel.updatePost(post, feedMode);
+    Navigator.pop(context);
   }
 }

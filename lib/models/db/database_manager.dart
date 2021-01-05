@@ -72,6 +72,8 @@ class DatabaseManager {
     return userIds;
   }
 
+  Future<void> updatePost(Post updatePost) {}
+
 //todo
 //Future<List<Post>> getPostsByUser(String userId) {}
 }

@@ -42,5 +42,18 @@ class FeedViewModel extends ChangeNotifier {
     return await userRepository.getUserById(userId);
   }
 
+  Future<void> updatePost(Post post, FeedMode feedMode) async{
+    isProcessing = true;
+
+    await postRepository.updatePost(
+      post.copyWith(caption: caption)
+    );
+
+    await getPosts(feedMode);
+
+    isProcessing = false;
+    notifyListeners();
+  }
+
 
 }
