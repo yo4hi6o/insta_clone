@@ -27,14 +27,14 @@ class DatabaseManager {
 
   Future<User> getUserInfoFromDbById(String userId) async {
     final query =
-    await _db.collection("users").where("userId", isEqualTo: userId).get();
+        await _db.collection("users").where("userId", isEqualTo: userId).get();
     return User.fromMap(query.docs[0].data());
   }
 
-  Future <String> uploadImageToStorage(File imageFile, String storageId) async {
+  Future<String> uploadImageToStorage(File imageFile, String storageId) async {
     final storageRef = FirebaseStorage.instance.ref().child(storageId);
     final uploadTask = storageRef.putFile(imageFile);
-    return await(await uploadTask.onComplete).ref.getDownloadURL();
+    return await (await uploadTask.onComplete).ref.getDownloadURL();
   }
 
   Future<void> insertPost(Post post) async {
@@ -50,19 +50,26 @@ class DatabaseManager {
     userIds.add(userId);
 
     var results = List<Post>();
-    await _db.collection("posts").where("userId", whereIn: userIds).orderBy(
-        "postDateTime", descending: true).get().then((value) {
-          value.docs.forEach((element) {
-            results.add(Post.fromMap(element.data()));
-          });
-        });
+    await _db
+        .collection("posts")
+        .where("userId", whereIn: userIds)
+        .orderBy("postDateTime", descending: true)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        results.add(Post.fromMap(element.data()));
+      });
+    });
     print("posts: $results");
     return results;
   }
 
-  Future <List<String>> getFollowingUserIds(String userId) async {
-    final query = await _db.collection("users").doc(userId).collection(
-        "followings").get();
+  Future<List<String>> getFollowingUserIds(String userId) async {
+    final query = await _db
+        .collection("users")
+        .doc(userId)
+        .collection("followings")
+        .get();
     if (query.docs.length == 0) return List();
 
     var userIds = List<String>();
@@ -72,7 +79,10 @@ class DatabaseManager {
     return userIds;
   }
 
-  Future<void> updatePost(Post updatePost) {}
+  Future<void> updatePost(Post updatePost) async {
+    final reference = _db.collection("posts").doc(updatePost.postId);
+    await reference.update(updatePost.toMap());
+  }
 
 //todo
 //Future<List<Post>> getPostsByUser(String userId) {}

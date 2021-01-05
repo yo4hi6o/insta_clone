@@ -21,22 +21,21 @@ class FeedPostEditScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //todo
-        actions: <Widget>[
-          IconButton(
+          //todo
+          actions: <Widget>[
+            IconButton(
               icon: Icon(Icons.done),
               onPressed: () => showConfirmDialog(
-                  context: context,
-                  title: S.of(context).editPost,
-                  content: S.of(context).editPostConfirm,
-                  onConfirmed: (isConfirmed){
-                    if(isConfirmed){}
-                    _updatePost(context);
-
-
-                  },),
-        ],
-      ),
+                context: context,
+                title: S.of(context).editPost,
+                content: S.of(context).editPostConfirm,
+                onConfirmed: (isConfirmed) {
+                  if (isConfirmed) {}
+                  _updatePost(context);
+                },
+              ),
+            )
+          ]),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -56,7 +55,7 @@ class FeedPostEditScreen extends StatelessWidget {
     );
   }
 
-  void _updatePost(BuildContext context) async{
+  void _updatePost(BuildContext context) async {
     final feedViewModel = Provider.of<FeedViewModel>(context, listen: false);
     await feedViewModel.updatePost(post, feedMode);
     Navigator.pop(context);
