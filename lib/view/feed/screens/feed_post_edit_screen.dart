@@ -19,39 +19,57 @@ class FeedPostEditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          //todo
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.done),
-              onPressed: () => showConfirmDialog(
-                context: context,
-                title: S.of(context).editPost,
-                content: S.of(context).editPostConfirm,
-                onConfirmed: (isConfirmed) {
-                  if (isConfirmed) {}
-                  _updatePost(context);
-                },
-              ),
-            )
-          ]),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            UserCard(
-              photoUrl: postUser.photoUrl,
-              title: postUser.inAppUserName,
-              subTitle: post.locationString,
-              onTap: null,
-            ),
-            PostCaptionPart(
-              from: PostCaptionOpenMode.FROM_FEED,
-              post: post,
-            )
-          ],
-        ),
-      ),
+    return Consumer<FeedViewModel>(
+      builder: (_, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+              leading: model.isProcessing
+                  ? Container()
+                  : IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+              title: model.isProcessing
+                  ? Text(S.of(context).underProcessing)
+                  : Text(S.of(context).editInfo),
+              actions: <Widget>[
+                model.isProcessing
+                    ? Container()
+                    : IconButton(
+                        icon: Icon(Icons.done),
+                        onPressed: () => showConfirmDialog(
+                          context: context,
+                          title: S.of(context).editPost,
+                          content: S.of(context).editPostConfirm,
+                          onConfirmed: (isConfirmed) {
+                            if (isConfirmed) {}
+                            _updatePost(context);
+                          },
+                        ),
+                      )
+              ]),
+          body: model.isProcessing
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      UserCard(
+                        photoUrl: postUser.photoUrl,
+                        title: postUser.inAppUserName,
+                        subTitle: post.locationString,
+                        onTap: null,
+                      ),
+                      PostCaptionPart(
+                        from: PostCaptionOpenMode.FROM_FEED,
+                        post: post,
+                      )
+                    ],
+                  ),
+                ),
+        );
+      },
     );
   }
 
