@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/style.dart';
 import 'package:insta_clone/utils/constants.dart';
+import 'package:insta_clone/view_models/feed_view_model.dart';
 import 'package:insta_clone/view_models/post_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -51,9 +52,19 @@ class _PostCaptionInputTextFieldState extends State<PostCaptionInputTextField> {
   }
 
   _onCaptionUpdated(){
-    final viewModel = Provider.of<PostViewModel>(context, listen: false);
-    viewModel.caption = _captionController.text;
-    print("caption: ${viewModel.caption}");
+    if (widget.from == PostCaptionOpenMode.FROM_FEED){
+      final viewModel = Provider.of<FeedViewModel>(context, listen: false);
+      viewModel.caption = _captionController.text;
+      print("caption: ${viewModel.caption}");
+
+    } else {
+      final viewModel = Provider.of<PostViewModel>(context, listen: false);
+      viewModel.caption = _captionController.text;
+      print("caption: ${viewModel.caption}");
+
+    }
+
+
 
   }
 }

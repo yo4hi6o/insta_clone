@@ -9,6 +9,8 @@ class FeedViewModel extends ChangeNotifier {
   final UserRepository userRepository;
   final PostRepository postRepository;
 
+  String caption = "";
+
   FeedViewModel({this.userRepository, this.postRepository});
 
   bool isProcessing = false;
