@@ -37,8 +37,12 @@ const commentNameTextStyle = TextStyle(
 );
 
 const commentContentTextStyle = TextStyle(
-    fontFamily: RegularFont, fontSize: 11.0
+    fontFamily: RegularFont, fontSize: 12.0
 );
 
+//Comments
+const commentInputTextStyle = TextStyle(
+    fontFamily: RegularFont, fontSize: 12.0
+);
 
 
