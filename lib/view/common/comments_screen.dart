@@ -36,7 +36,7 @@ class CommentsScreen extends StatelessWidget {
                 text: post.caption,
                 postDateTime: post.postDateTime,
               ),
-              //todo コメント
+              //コメントのリスト
               Consumer<CommentsViewModel>(
                 builder: (context, model, child) {
                   return ListView.builder(
@@ -44,9 +44,22 @@ class CommentsScreen extends StatelessWidget {
                     itemCount: model.comments.length,
                     itemBuilder: (context, index) {
                       final comment = model.comments[index];
-                      return ListTile(
-                        title: Text(comment.commentUserId),
-                        subtitle: Text(comment.comment),
+                      final commentUserId = comment.commentUserId;
+                      return FutureBuilder(future: model.getCommentUserInfo(commentUserId),
+                      builder: (context, AsyncSnapshot<User> snapshot){
+                        if (snapshot.hasData){
+                          final commentUser = snapshot.data;
+                          return CommentsDisplayPart(
+                            postUserPhotoUrl: commentUser.photoUrl,
+                            postDateTime: comment.commentDateTime,
+                            name: commentUser.inAppUserName,
+                            text: comment.comment,
+                          );
+                        } else {
+                          return Container();
+                        }
+
+                        },
                       );
                     },
                   );
