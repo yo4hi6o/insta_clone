@@ -45,6 +45,7 @@ class _CommentInputPartState extends State<CommentInputPart> {
           isImageFromFile: false,
         ),
         title: TextField(
+          maxLines: null,
           controller: _commentInputController,
           style: commentInputTextStyle,
           decoration: InputDecoration(

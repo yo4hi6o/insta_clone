@@ -9,12 +9,12 @@ const BoldFont = "NotoSansJP-Bold";
 const loginTitleTextStyle = TextStyle(fontFamily: TitleFont,fontSize: 48.0);
 
 //Post
-const postCaptionTextStyle = TextStyle(fontFamily: RegularFont,fontSize: 14.0);
-const postLocationTextStyle = TextStyle(fontFamily: RegularFont,fontSize: 16.0);
+const postCaptionTextStyle = TextStyle(fontFamily: RegularFont,fontSize: 12.0);
+const postLocationTextStyle = TextStyle(fontFamily: RegularFont,fontSize: 12.0);
 
 //feed
 const userCardTitleTextStyle = TextStyle(
-  fontFamily: BoldFont, fontSize: 14.0
+  fontFamily: BoldFont, fontSize: 12.0
 );
 const userCardSubTitleTextStyle = TextStyle(
   fontFamily: RegularFont, fontSize: 12.0
