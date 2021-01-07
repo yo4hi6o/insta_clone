@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clone/data_models/comments.dart';
 import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/models/repositories/post_repository.dart';
@@ -12,11 +13,28 @@ class CommentsViewModel extends ChangeNotifier {
 
   String comment = "";
 
+  List<Comment> comments = List();
+
+  bool  isLoading = false;
+
   CommentsViewModel({this.userRepository, this.postRepository});
 
   Future<void> postComment(Post post) async{
     await postRepository.postComment(post, currentUser, comment);
+    getComments(post.postId);
     notifyListeners();
+  }
+
+  Future<void> getComments(String postId) async {
+    isLoading = true;
+    notifyListeners();
+
+    comments = await postRepository.getComments(postId);
+    print("comments from DB: $comments");
+
+    isLoading = false;
+    notifyListeners();
+
   }
 
 }

@@ -92,6 +92,19 @@ class DatabaseManager {
         .set(comment.toMap());
   }
 
+  Future<List<Comment>> getComments(String postId) async {
+    final query = await _db.collection("comments").get();
+    if(query.docs.length == 0) return List();
+    var result = List<Comment>();
+    await _db.collection("comments").where("postId", isEqualTo: postId).orderBy("commentDateTime").get()
+    .then((value) {
+       value.docs.forEach((element) {
+         result.add(Comment.fromMap(element.data()));
+       });
+    });
+    return result;
+  }
+
 //todo
 //Future<List<Post>> getPostsByUser(String userId) {}
 }

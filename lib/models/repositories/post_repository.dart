@@ -83,4 +83,8 @@ class PostRepository {
 
     await dbManager.postComment(comment);
   }
+
+  Future<List<Comment>> getComments(String postId) async{
+    return dbManager.getComments(postId);
+  }
 }
