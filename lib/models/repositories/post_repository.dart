@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:insta_clone/data_models/comments.dart';
 import 'package:insta_clone/data_models/location.dart';
 import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
@@ -21,11 +22,11 @@ class PostRepository {
 
     if (uploadType == UploadType.GALLERY) {
       final pickedImage =
-          await imagePicker.getImage(source: ImageSource.gallery);
+      await imagePicker.getImage(source: ImageSource.gallery);
       return File(pickedImage.path);
     } else {
       final pickedImage =
-          await imagePicker.getImage(source: ImageSource.camera);
+      await imagePicker.getImage(source: ImageSource.camera);
       return File(pickedImage.path);
     }
   }
@@ -56,17 +57,30 @@ class PostRepository {
     await dbManager.insertPost(post);
   }
 
-  Future<List<Post>> getPosts(FeedMode feedMode, User feedUser) async{
-    if (feedMode == FeedMode.FROM_FEED){
+  Future<List<Post>> getPosts(FeedMode feedMode, User feedUser) async {
+    if (feedMode == FeedMode.FROM_FEED) {
       // 自分+フォローしているユーザーの投稿を取得
       return dbManager.getPostMineAndFollowings(feedUser.userId);
-    } else{
+    } else {
       // プロフィール画面に表示されているユーザーの投稿を取得
       //return dbManager.getPostsByUser(feedUser.userId);
     }
   }
 
-  Future<void> updatePost(Post updatePost) async{
+  Future<void> updatePost(Post updatePost) async {
     return dbManager.updatePost(updatePost);
+  }
+
+  Future<void> postComment(Post post, User commentUser,
+      String commentString) async {
+    final comment = Comment(
+        commentId: Uuid().v1(),
+        postId: post.postId,
+        commentUserId: commentUser.userId,
+        comment: commentString,
+        commentDateTime: DateTime.now()
+    );
+
+    await dbManager.postComment(comment);
   }
 }

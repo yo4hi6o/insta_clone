@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/data_models/comments.dart';
 import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
 
@@ -82,6 +83,13 @@ class DatabaseManager {
   Future<void> updatePost(Post updatePost) async {
     final reference = _db.collection("posts").doc(updatePost.postId);
     await reference.update(updatePost.toMap());
+  }
+
+  Future<void> postComment(Comment comment) async {
+    await _db
+        .collection("comments")
+        .doc(comment.commentId)
+        .set(comment.toMap());
   }
 
 //todo

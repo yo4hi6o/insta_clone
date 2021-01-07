@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/style.dart';
 import 'package:insta_clone/view/common/components/circle_photo.dart';
@@ -6,6 +7,10 @@ import 'package:insta_clone/view_models/comments_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CommentInputPart extends StatefulWidget {
+  final Post post;
+
+  CommentInputPart({@required this.post});
+
   @override
   _CommentInputPartState createState() => _CommentInputPartState();
 }
@@ -48,7 +53,12 @@ class _CommentInputPartState extends State<CommentInputPart> {
           ),
         ),
         trailing: FlatButton(
-          onPressed: isCommentPostEnable ? () => _postComment(context) : null,
+          onPressed: isCommentPostEnable
+              ? () => _postComment(
+                    context,
+                    widget.post,
+                  )
+              : null,
           child: Text(
             S.of(context).post,
             style: TextStyle(
@@ -76,5 +86,10 @@ class _CommentInputPartState extends State<CommentInputPart> {
   }
 
   //todo
-  _postComment(BuildContext context) {}
+  _postComment(BuildContext context, Post post) async {
+    final commentsViewModel =
+        Provider.of<CommentsViewModel>(context, listen: false);
+    await commentsViewModel.postComment(post);
+    _commentInputController.clear();
+  }
 }
