@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:insta_clone/data_models/comments.dart';
 import 'package:insta_clone/data_models/like.dart';

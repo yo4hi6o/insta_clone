@@ -137,7 +137,29 @@ class DatabaseManager {
     });
   }
 
-  deletePost(String postId, String imageStoragePath) {}
+  Future<void> deletePost(String postId, String imageStoragePath) async{
+    //post
+    final postRef = _db.collection("posts").doc(postId);
+    await  postRef.delete();
+
+    //Comment
+    final commentRef = await _db.collection("comments").where("postId",isEqualTo: postId).get();
+    commentRef.docs.forEach((element) async{
+      final ref = _db.collection("comments").doc(element.id);
+      await ref.delete();
+    });
+
+    //Likes
+    final likeRef = await _db.collection("likes").where("postId",isEqualTo: postId).get();
+    likeRef.docs.forEach((element) async{
+      final ref = _db.collection("likes").doc(element.id);
+      await ref.delete();
+    });
+
+    //Storage画像を削除
+    final storageRef = FirebaseStorage.instance.ref().child(imageStoragePath);
+    storageRef.delete();
+  }
 
 //todo
 //Future<List<Post>> getPostsByUser(String userId) {}
