@@ -5,6 +5,8 @@ import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/style.dart';
 import 'package:insta_clone/view/common/comments_screen.dart';
+import 'package:insta_clone/view_models/feed_view_model.dart';
+import 'package:provider/provider.dart';
 
 class FeedPostLikesPart extends StatelessWidget {
   final Post post;
@@ -24,8 +26,7 @@ class FeedPostLikesPart extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: FaIcon(FontAwesomeIcons.solidHeart),
-                //todo
-                onPressed: null,
+                onPressed: () => _likeIt(context),
               ),
               IconButton(
                 icon: FaIcon(FontAwesomeIcons.comment),
@@ -53,5 +54,10 @@ class FeedPostLikesPart extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _likeIt(BuildContext context) async{
+    final feedViewModel = Provider.of<FeedViewModel> (context, listen: false);
+    await feedViewModel.likeIt(post);
   }
 }

@@ -60,5 +60,10 @@ class FeedViewModel extends ChangeNotifier {
     return await postRepository.getComments(postId);
   }
 
+  Future<void> likeIt(Post post) async{
+    await postRepository.likeIt(post, currentUser);
+    notifyListeners();
+  }
+
 
 }
