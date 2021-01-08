@@ -24,14 +24,18 @@ class FeedSubPage extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else {
-          return ListView.builder(
-            itemCount: model.posts.length,
-            itemBuilder: (context, index) {
-              return FeedPostTile(
-                feedMode: feedMode,
-                post: model.posts[index],
-              );
-            },
+          return RefreshIndicator(
+            onRefresh: () => feedViewModel.getPosts(feedMode),
+            child: ListView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
+              itemCount: model.posts.length,
+              itemBuilder: (context, index) {
+                return FeedPostTile(
+                  feedMode: feedMode,
+                  post: model.posts[index],
+                );
+              },
+            ),
           );
         }
       },
