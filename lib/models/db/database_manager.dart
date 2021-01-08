@@ -115,6 +115,18 @@ class DatabaseManager {
     await _db.collection("likes").doc(like.likeId).set(like.toMap());
   }
 
+  Future<List<Like>> getLikes(String postId) async{
+    final query = await _db.collection("likes").get();
+    if (query.docs.length == 0) return List();
+    var result = List<Like>();
+    await _db.collection("likes").where("postId",isEqualTo: postId).orderBy("likeDateTime").get().then((value) {
+      value.docs.forEach((element) {
+        result.add(Like.fromMap(element.data()));
+      });
+    });
+    return result;
+  }
+
 //todo
 //Future<List<Post>> getPostsByUser(String userId) {}
 }

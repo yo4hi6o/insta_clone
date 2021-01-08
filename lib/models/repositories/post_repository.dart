@@ -102,4 +102,10 @@ class PostRepository {
     );
     await dbManager.likeIt(like);
   }
+
+  Future<LikeResult> getlLikeResult(String postId, User currentUser) async{
+    //いいねの取得
+    final likes = await dbManager.getLikes(postId);
+    //自分がその投稿にいいねしたかどうかの判定
+  }
 }

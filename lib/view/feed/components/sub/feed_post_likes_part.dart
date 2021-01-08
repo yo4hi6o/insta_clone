@@ -16,24 +16,29 @@ class FeedPostLikesPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final feedViewModel = Provider.of<FeedViewModel> (context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              IconButton(
-                icon: FaIcon(FontAwesomeIcons.solidHeart),
-                onPressed: () => _likeIt(context),
-              ),
-              IconButton(
-                icon: FaIcon(FontAwesomeIcons.comment),
-                //todo
-                onPressed: () => _openCommentsScreen(context, post, postUser),
-              ),
-            ],
+          FutureBuilder(
+            future: feedViewModel.getLikeResult(post.postId),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                IconButton(
+                  icon: FaIcon(FontAwesomeIcons.solidHeart),
+                  onPressed: () => _likeIt(context),
+                ),
+                IconButton(
+                  icon: FaIcon(FontAwesomeIcons.comment),
+                  //todo
+                  onPressed: () => _openCommentsScreen(context, post, postUser),
+                ),
+              ],
+            ),
           ),
           Text(
             "0 ${S.of(context).likes}",
