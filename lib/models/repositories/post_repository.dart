@@ -107,5 +107,13 @@ class PostRepository {
     //いいねの取得
     final likes = await dbManager.getLikes(postId);
     //自分がその投稿にいいねしたかどうかの判定
+    var isLikedPost = false;
+    for (var like in likes){
+      if (like.likeUserId == currentUser.userId){
+        isLikedPost = true;
+        break;
+      }
+    }
+    return LikeResult(likes: likes, isLikedToThisPost: isLikedPost);
   }
 }
