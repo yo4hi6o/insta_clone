@@ -127,6 +127,16 @@ class DatabaseManager {
     return result;
   }
 
+  Future<void> unLikeIt(Post post, User currentUser) async{
+    final likeRef = await _db.collection("likes").where("postId", isEqualTo: post.postId)
+        .where("likeUserId", isEqualTo: currentUser.userId)
+        .get();
+    likeRef.docs.forEach((element) async {
+      final ref =_db.collection("likes").doc(element.id);
+      await ref.delete();
+    });
+  }
+
 //todo
 //Future<List<Post>> getPostsByUser(String userId) {}
 }

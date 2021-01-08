@@ -81,6 +81,8 @@ class FeedPostLikesPart extends StatelessWidget {
     await feedViewModel.likeIt(post);
   }
 
-  //todo
-  _unLikeIt(BuildContext context) {}
+  _unLikeIt(BuildContext context) async {
+    final feedViewModel = Provider.of<FeedViewModel>(context, listen: false);
+    await feedViewModel.unLikeIt(post);
+  }
 }
