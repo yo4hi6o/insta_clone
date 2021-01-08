@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:insta_clone/generated/l10n.dart';
+import 'package:insta_clone/utils/constants.dart';
 import 'package:insta_clone/view/activities/pages/activities_page.dart';
 import 'package:insta_clone/view/feed/pages/feed_page.dart';
 import 'package:insta_clone/view/post/pages/post_page.dart';
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       SearchPage(),
       PostPage(),
       ActivitiesPage(),
-      ProfilePage(),
+      ProfilePage(profileMode: ProfileMode.MYSELF,),
     ];
     super.initState();
   }

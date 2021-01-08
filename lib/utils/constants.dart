@@ -18,3 +18,8 @@ enum PostMenu {
   DELETE,
   SHARE,
 }
+
+enum ProfileMode {
+  MYSELF,
+  OTHER,
+}

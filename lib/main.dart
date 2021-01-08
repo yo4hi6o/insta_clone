@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:insta_clone/di/providers.dart';
-import 'package:insta_clone/view/login/screens/home_screen.dart';
+import 'package:insta_clone/view/search/pages/home_screen.dart';
 import 'package:insta_clone/style.dart';
 import 'package:insta_clone/view/login/screens/login_screen.dart';
 import 'package:insta_clone/view_models/login_view_model.dart';

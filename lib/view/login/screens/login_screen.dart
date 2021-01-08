@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/style.dart';
 import 'package:insta_clone/view/common/components/button_with_icon.dart';
-import 'package:insta_clone/view/login/screens/home_screen.dart';
+import 'package:insta_clone/view/search/pages/home_screen.dart';
 import 'package:insta_clone/view_models/login_view_model.dart';
 import 'package:provider/provider.dart';
 
