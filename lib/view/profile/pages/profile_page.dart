@@ -15,13 +15,17 @@ class ProfilePage extends StatelessWidget {
     final profileViewModel = Provider.of<ProfileViewModel>(context, listen: false);
     profileViewModel.setProfileUser(profileMode, selectedUser);
 
-
-    }
+    Future(() => profileViewModel.getPost());
 
     return Scaffold(
-      body: Center(
-        child: Text("ProfilePage"),
-      ),
+      body: Consumer<ProfileViewModel>(
+        builder: (context, model, child){
+          print("posts in Profile: ${model.posts}");
+          return Center(
+          child: Text(model.posts.toString()),
+          );
+        },
+      )
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/models/repositories/post_repository.dart';
 import 'package:insta_clone/models/repositories/user_repository.dart';
@@ -12,12 +13,27 @@ class ProfileViewModel extends ChangeNotifier {
   User profileUser;
   User get currentUser => UserRepository.currentUser;
 
+  bool isProcessing = false;
+
+  List<Post> posts = List();
+
   void setProfileUser(ProfileMode profileMode, User selectedUser) {
     if (profileMode == ProfileMode.MYSELF) {
       profileUser = currentUser;
     } else {
       profileUser = selectedUser;
     }
+  }
+
+  Future<void> getPost() async{
+    isProcessing = true;
+    notifyListeners();
+
+    posts = await postRepository.getPosts(FeedMode.FROM_PROFILE, profileUser);
+
+    isProcessing = false;
+    notifyListeners();
+
   }
 
 }

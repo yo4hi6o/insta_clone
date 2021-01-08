@@ -29,7 +29,7 @@ class DatabaseManager {
 
   Future<User> getUserInfoFromDbById(String userId) async {
     final query =
-        await _db.collection("users").where("userId", isEqualTo: userId).get();
+    await _db.collection("users").where("userId", isEqualTo: userId).get();
     return User.fromMap(query.docs[0].data());
   }
 
@@ -41,6 +41,21 @@ class DatabaseManager {
 
   Future<void> insertPost(Post post) async {
     await _db.collection("posts").doc(post.postId).set(post.toMap());
+  }
+
+  Future<List<Post>> getPostsByUser(String userId) async {
+    final query = await _db.collection("posts").get();
+    if (query.docs.length == 0) return List();
+
+    var results = List<Post>();
+    await _db.collection("posts").where("userId", isEqualTo: userId)
+        .orderBy("postDateTime", descending: true)
+        .get().then((value) {
+      value.docs.forEach((element) {
+        results.add(Post.fromMap(element.data()));
+      });
+    });
+    return results;
   }
 
   Future<List<Post>> getPostMineAndFollowings(String userId) async {
@@ -95,31 +110,33 @@ class DatabaseManager {
 
   Future<List<Comment>> getComments(String postId) async {
     final query = await _db.collection("comments").get();
-    if(query.docs.length == 0) return List();
+    if (query.docs.length == 0) return List();
     var result = List<Comment>();
-    await _db.collection("comments").where("postId", isEqualTo: postId).orderBy("commentDateTime").get()
-    .then((value) {
-       value.docs.forEach((element) {
-         result.add(Comment.fromMap(element.data()));
-       });
+    await _db.collection("comments").where("postId", isEqualTo: postId).orderBy(
+        "commentDateTime").get()
+        .then((value) {
+      value.docs.forEach((element) {
+        result.add(Comment.fromMap(element.data()));
+      });
     });
     return result;
   }
 
-  Future<void> deleteComment(String deleteCommentId) async{
+  Future<void> deleteComment(String deleteCommentId) async {
     final reference = _db.collection("comments").doc(deleteCommentId);
     await reference.delete();
   }
 
-  Future<void> likeIt(Like like) async{
+  Future<void> likeIt(Like like) async {
     await _db.collection("likes").doc(like.likeId).set(like.toMap());
   }
 
-  Future<List<Like>> getLikes(String postId) async{
+  Future<List<Like>> getLikes(String postId) async {
     final query = await _db.collection("likes").get();
     if (query.docs.length == 0) return List();
     var result = List<Like>();
-    await _db.collection("likes").where("postId",isEqualTo: postId).orderBy("likeDateTime").get().then((value) {
+    await _db.collection("likes").where("postId", isEqualTo: postId).orderBy(
+        "likeDateTime").get().then((value) {
       value.docs.forEach((element) {
         result.add(Like.fromMap(element.data()));
       });
@@ -127,31 +144,34 @@ class DatabaseManager {
     return result;
   }
 
-  Future<void> unLikeIt(Post post, User currentUser) async{
-    final likeRef = await _db.collection("likes").where("postId", isEqualTo: post.postId)
+  Future<void> unLikeIt(Post post, User currentUser) async {
+    final likeRef = await _db.collection("likes").where(
+        "postId", isEqualTo: post.postId)
         .where("likeUserId", isEqualTo: currentUser.userId)
         .get();
     likeRef.docs.forEach((element) async {
-      final ref =_db.collection("likes").doc(element.id);
+      final ref = _db.collection("likes").doc(element.id);
       await ref.delete();
     });
   }
 
-  Future<void> deletePost(String postId, String imageStoragePath) async{
+  Future<void> deletePost(String postId, String imageStoragePath) async {
     //post
     final postRef = _db.collection("posts").doc(postId);
-    await  postRef.delete();
+    await postRef.delete();
 
     //Comment
-    final commentRef = await _db.collection("comments").where("postId",isEqualTo: postId).get();
-    commentRef.docs.forEach((element) async{
+    final commentRef = await _db.collection("comments").where(
+        "postId", isEqualTo: postId).get();
+    commentRef.docs.forEach((element) async {
       final ref = _db.collection("comments").doc(element.id);
       await ref.delete();
     });
 
     //Likes
-    final likeRef = await _db.collection("likes").where("postId",isEqualTo: postId).get();
-    likeRef.docs.forEach((element) async{
+    final likeRef = await _db.collection("likes").where(
+        "postId", isEqualTo: postId).get();
+    likeRef.docs.forEach((element) async {
       final ref = _db.collection("likes").doc(element.id);
       await ref.delete();
     });
@@ -161,6 +181,5 @@ class DatabaseManager {
     storageRef.delete();
   }
 
-//todo
-//Future<List<Post>> getPostsByUser(String userId) {}
+
 }

@@ -6,6 +6,7 @@ import 'package:insta_clone/utils/constants.dart';
 import 'package:insta_clone/view/common/components/user_card.dart';
 import 'package:insta_clone/view/common/dialog/confirm_dialog.dart';
 import 'package:insta_clone/view/feed/screens/feed_post_edit_screen.dart';
+import 'package:insta_clone/view/profile/screens/profile_screen.dart';
 import 'package:insta_clone/view_models/feed_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -29,8 +30,7 @@ class FeedPostHeaderPart extends StatelessWidget {
       photoUrl: postUser.photoUrl,
       title: postUser.inAppUserName,
       subTitle: post.locationString,
-      onTap: null,
-      //todo
+      onTap: () => _openProfile(context, postUser),
       trailing: PopupMenuButton(
         icon: Icon(Icons.more_vert),
         onSelected: (value) => onPopupMenuSelected(context, value),
@@ -95,5 +95,19 @@ class FeedPostHeaderPart extends StatelessWidget {
   void _deletePost(BuildContext context, Post post) async {
     final feedViewModel = Provider.of<FeedViewModel>(context, listen: false);
     await feedViewModel.deletePost(post, feedMode);
+  }
+
+  _openProfile(BuildContext context, User postUser) {
+    final feedViewModel = Provider.of<FeedViewModel>(context, listen: false);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProfileScreen(
+                  profileMode:
+                      postUser.userId == feedViewModel.currentUser.userId
+                          ? ProfileMode.MYSELF
+                          : ProfileMode.OTHER,
+                  selectedUser: postUser,
+                )));
   }
 }
