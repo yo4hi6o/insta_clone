@@ -32,11 +32,15 @@ class FeedPostLikesPart extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      //todo
-                      IconButton(
-                        icon: FaIcon(FontAwesomeIcons.solidHeart),
-                        onPressed: () => _likeIt(context),
-                      ),
+                      likeResult.isLikedToThisPost
+                          ? IconButton(
+                              icon: FaIcon(FontAwesomeIcons.solidHeart),
+                              onPressed: () => _unLikeIt(context),
+                            )
+                          : IconButton(
+                              icon: FaIcon(FontAwesomeIcons.heart),
+                              onPressed: () => _likeIt(context),
+                            ),
                       IconButton(
                         icon: FaIcon(FontAwesomeIcons.comment),
                         //todo
@@ -46,7 +50,9 @@ class FeedPostLikesPart extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    likeResult.likes.length.toString() + " " + S.of(context).likes,
+                    likeResult.likes.length.toString() +
+                        " " +
+                        S.of(context).likes,
                     style: numberOfLikesTextStyle,
                   ),
                 ]);
@@ -74,4 +80,7 @@ class FeedPostLikesPart extends StatelessWidget {
     final feedViewModel = Provider.of<FeedViewModel>(context, listen: false);
     await feedViewModel.likeIt(post);
   }
+
+  //todo
+  _unLikeIt(BuildContext context) {}
 }
