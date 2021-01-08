@@ -122,4 +122,8 @@ class PostRepository {
     return LikeResult(likes: likes, isLikedToThisPost: isLikedPost);
   }
 
+  Future<void> deletePost(String postId, String imageStoragePath) async{
+    await dbManager.deletePost(postId,imageStoragePath);
+  }
+
 }

@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:insta_clone/data_models/comments.dart';
 import 'package:insta_clone/data_models/like.dart';
@@ -72,6 +74,17 @@ class FeedViewModel extends ChangeNotifier {
 
   Future<void> unLikeIt(Post post) async{
     await postRepository.unLikeIt(post, currentUser);
+    notifyListeners();
+  }
+
+  Future<void> deletePost(Post post, FeedMode feedMode) async{
+    isProcessing = true;
+    notifyListeners();
+
+    await postRepository.deletePost(post.postId, post.imageStoragePath);
+    await getPosts(feedMode);
+
+    isProcessing = false;
     notifyListeners();
   }
 

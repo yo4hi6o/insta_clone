@@ -137,6 +137,8 @@ class DatabaseManager {
     });
   }
 
+  deletePost(String postId, String imageStoragePath) {}
+
 //todo
 //Future<List<Post>> getPostsByUser(String userId) {}
 }
