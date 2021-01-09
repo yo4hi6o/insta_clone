@@ -36,4 +36,9 @@ class ProfileViewModel extends ChangeNotifier {
 
   }
 
+  Future<void> signOut() async {
+    await userRepository.signOut();
+    notifyListeners();
+  }
+
 }
