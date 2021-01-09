@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/utils/constants.dart';
+import 'package:insta_clone/view/profile/components/profile_detail_part.dart';
 import 'package:insta_clone/view/profile/components/profile_setting_part.dart';
 import 'package:insta_clone/view_models/profile_view_model.dart';
 import 'package:provider/provider.dart';
@@ -36,8 +37,9 @@ class ProfilePage extends StatelessWidget {
               ],
               expandedHeight: 280.0,
               flexibleSpace: FlexibleSpaceBar(
-                //todo ProfileDetailPart
-                background: Container(),
+                background: ProfileDetailPart(
+                  mode: profileMode,
+                ),
               ),
             )
           ],
