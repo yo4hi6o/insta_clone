@@ -20,9 +20,26 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       body: Consumer<ProfileViewModel>(
         builder: (context, model, child){
+          final profileUser = model.profileUser;
           print("posts in Profile: ${model.posts}");
-          return Center(
-          child: Text(model.posts.toString()),
+          return CustomScrollView(
+            slivers:<Widget> [
+              SliverAppBar(
+                title: Text(profileUser.inAppUserName),
+                pinned: true,
+                floating: true,
+                actions:<Widget> [
+                  //todo
+                  //ProfileSettingPart(),
+                ],
+                expandedHeight: 280.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  //todo ProfileDetailPart
+                  background: Container(),
+                ),
+              )
+            ],
+
           );
         },
       )
