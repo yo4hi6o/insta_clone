@@ -65,5 +65,9 @@ class UserRepository {
     return await dbManager.getUserInfoFromDbById(userId);
   }
 
-  signOut() {}
+  Future<void> signOut() async{
+    await _googleSignIn.signOut();
+    await _auth.signOut();
+    currentUser = null;
+  }
 }
