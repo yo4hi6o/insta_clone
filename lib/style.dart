@@ -45,4 +45,13 @@ const commentInputTextStyle = TextStyle(
     fontFamily: RegularFont, fontSize: 12.0
 );
 
+//Profile
+const profileRecordScoreTextStyle = TextStyle(
+    fontFamily: BoldFont, fontSize: 20.0
+);
+
+const profileRecordTitleTextStyle = TextStyle(
+    fontFamily: RegularFont, fontSize: 14.0
+);
+
 
