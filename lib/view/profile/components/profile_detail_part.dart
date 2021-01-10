@@ -29,7 +29,9 @@ class ProfileDetailPart extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.0,),
-          ProfileBio()
+          ProfileBio(
+            mode: mode,
+          )
         ],
       ),
     );
