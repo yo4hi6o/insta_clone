@@ -74,4 +74,8 @@ class UserRepository {
   Future<int> getNumberOfFollowers(User profileUser) async{
     return (await dbManager.getFollowerUserIds(profileUser.userId)).length;
   }
+
+  Future<int> getNumberOfFollowings(User profileUser) async {
+    return (await dbManager. getFollowingUserIds(profileUser.userId)).length;
+  }
 }

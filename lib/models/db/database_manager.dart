@@ -29,7 +29,7 @@ class DatabaseManager {
 
   Future<User> getUserInfoFromDbById(String userId) async {
     final query =
-    await _db.collection("users").where("userId", isEqualTo: userId).get();
+        await _db.collection("users").where("userId", isEqualTo: userId).get();
     return User.fromMap(query.docs[0].data());
   }
 
@@ -48,9 +48,12 @@ class DatabaseManager {
     if (query.docs.length == 0) return List();
 
     var results = List<Post>();
-    await _db.collection("posts").where("userId", isEqualTo: userId)
+    await _db
+        .collection("posts")
+        .where("userId", isEqualTo: userId)
         .orderBy("postDateTime", descending: true)
-        .get().then((value) {
+        .get()
+        .then((value) {
       value.docs.forEach((element) {
         results.add(Post.fromMap(element.data()));
       });
@@ -96,6 +99,17 @@ class DatabaseManager {
     return userIds;
   }
 
+  Future<List<String>> getFollowerUserIds(String userId) async {
+    final query =
+        await _db.collection("users").doc(userId).collection("followers").get();
+    if (query.docs.length == 0) return List();
+    var userIds = List<String>();
+    query.docs.forEach((id) {
+      userIds.add(id.data()["userId"]);
+    });
+    return userIds;
+  }
+
   Future<void> updatePost(Post updatePost) async {
     final reference = _db.collection("posts").doc(updatePost.postId);
     await reference.update(updatePost.toMap());
@@ -112,8 +126,11 @@ class DatabaseManager {
     final query = await _db.collection("comments").get();
     if (query.docs.length == 0) return List();
     var result = List<Comment>();
-    await _db.collection("comments").where("postId", isEqualTo: postId).orderBy(
-        "commentDateTime").get()
+    await _db
+        .collection("comments")
+        .where("postId", isEqualTo: postId)
+        .orderBy("commentDateTime")
+        .get()
         .then((value) {
       value.docs.forEach((element) {
         result.add(Comment.fromMap(element.data()));
@@ -135,8 +152,12 @@ class DatabaseManager {
     final query = await _db.collection("likes").get();
     if (query.docs.length == 0) return List();
     var result = List<Like>();
-    await _db.collection("likes").where("postId", isEqualTo: postId).orderBy(
-        "likeDateTime").get().then((value) {
+    await _db
+        .collection("likes")
+        .where("postId", isEqualTo: postId)
+        .orderBy("likeDateTime")
+        .get()
+        .then((value) {
       value.docs.forEach((element) {
         result.add(Like.fromMap(element.data()));
       });
@@ -145,8 +166,9 @@ class DatabaseManager {
   }
 
   Future<void> unLikeIt(Post post, User currentUser) async {
-    final likeRef = await _db.collection("likes").where(
-        "postId", isEqualTo: post.postId)
+    final likeRef = await _db
+        .collection("likes")
+        .where("postId", isEqualTo: post.postId)
         .where("likeUserId", isEqualTo: currentUser.userId)
         .get();
     likeRef.docs.forEach((element) async {
@@ -161,16 +183,18 @@ class DatabaseManager {
     await postRef.delete();
 
     //Comment
-    final commentRef = await _db.collection("comments").where(
-        "postId", isEqualTo: postId).get();
+    final commentRef = await _db
+        .collection("comments")
+        .where("postId", isEqualTo: postId)
+        .get();
     commentRef.docs.forEach((element) async {
       final ref = _db.collection("comments").doc(element.id);
       await ref.delete();
     });
 
     //Likes
-    final likeRef = await _db.collection("likes").where(
-        "postId", isEqualTo: postId).get();
+    final likeRef =
+        await _db.collection("likes").where("postId", isEqualTo: postId).get();
     likeRef.docs.forEach((element) async {
       final ref = _db.collection("likes").doc(element.id);
       await ref.delete();
@@ -180,16 +204,4 @@ class DatabaseManager {
     final storageRef = FirebaseStorage.instance.ref().child(imageStoragePath);
     storageRef.delete();
   }
-
-  Future<List<String>> getFollowerUserIds(String userId) async {
-    final query = await _db.collection("users").doc(userId).collection("followers").get();
-    if (query.docs.length == 0) return List();
-    var userIds = List<String>();
-    query.docs.forEach((id) {
-      userIds.add(id.data()["userId"]);
-    });
-    return userIds;
-  }
-
-
 }

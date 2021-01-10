@@ -8,7 +8,7 @@ class ProfileRecords extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileViewModel =
-        Provider.of<ProfileViewModel>(context, listen: false);
+    Provider.of<ProfileViewModel>(context, listen: false);
 
     return Row(
       children: <Widget>[
@@ -18,25 +18,35 @@ class ProfileRecords extends StatelessWidget {
             return _userRecordWidget(
               context: context,
               score: snapshot.hasData ? snapshot.data : 0,
-              title: S.of(context).post,
+              title: S
+                  .of(context)
+                  .post,
             );
           },
         ),
         FutureBuilder(
-            future: profileViewModel.getNumberOfFollowers(),
-            builder: (context, AsyncSnapshot<int> snapshot){
-              return _userRecordWidget(
-                context: context,
-                score: snapshot.hasData ? snapshot.data : 0,
-                title: S.of(context).followers,
-              );
-            },
+          future: profileViewModel.getNumberOfFollowers(),
+          builder: (context, AsyncSnapshot<int> snapshot) {
+            return _userRecordWidget(
+              context: context,
+              score: snapshot.hasData ? snapshot.data : 0,
+              title: S
+                  .of(context)
+                  .followers,
+            );
+          },
         ),
-
-        _userRecordWidget(
-          context: context,
-          score: 3,
-          title: S.of(context).followings,
+        FutureBuilder(
+            future: profileViewModel.getNumberOfFollowings(),
+            builder: (context, AsyncSnapshot<int> snapshot) {
+              return _userRecordWidget(
+                  context: context,
+                  score: snapshot.hasData ? snapshot.data : 0,
+                  title: S
+                  .of(context)
+                  .followings,
+              );
+            }
         ),
       ],
     );
