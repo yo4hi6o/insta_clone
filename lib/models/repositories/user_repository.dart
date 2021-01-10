@@ -70,4 +70,8 @@ class UserRepository {
     await _auth.signOut();
     currentUser = null;
   }
+
+  Future<int> getNumberOfFollowers(User profileUser) async{
+    return (await dbManager.getFollowerUserIds(profileUser.userId)).length;
+  }
 }

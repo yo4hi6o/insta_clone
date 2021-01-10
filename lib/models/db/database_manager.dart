@@ -181,5 +181,15 @@ class DatabaseManager {
     storageRef.delete();
   }
 
+  Future<List<String>> getFollowerUserIds(String userId) async {
+    final query = await _db.collection("users").doc(userId).collection("followers").get();
+    if (query.docs.length == 0) return List();
+    var userIds = List<String>();
+    query.docs.forEach((id) {
+      userIds.add(id.data()["userId"]);
+    });
+    return userIds;
+  }
+
 
 }

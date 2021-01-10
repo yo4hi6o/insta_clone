@@ -22,11 +22,17 @@ class ProfileRecords extends StatelessWidget {
             );
           },
         ),
-        _userRecordWidget(
-          context: context,
-          score: 1,
-          title: S.of(context).followers,
+        FutureBuilder(
+            future: profileViewModel.getNumberOfFollowers(),
+            builder: (context, AsyncSnapshot<int> snapshot){
+              return _userRecordWidget(
+                context: context,
+                score: snapshot.hasData ? snapshot.data : 0,
+                title: S.of(context).followers,
+              );
+            },
         ),
+
         _userRecordWidget(
           context: context,
           score: 3,
