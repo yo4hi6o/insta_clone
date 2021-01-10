@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/utils/constants.dart';
 import 'package:insta_clone/view/feed/components/feed_post_tile.dart';
 import 'package:insta_clone/view_models/feed_view_model.dart';
@@ -6,14 +7,15 @@ import 'package:provider/provider.dart';
 
 class FeedSubPage extends StatelessWidget {
   final FeedMode feedMode;
+  final User feedUser;
+  final int index;
 
-  FeedSubPage({@required this.feedMode});
+  FeedSubPage({@required this.feedMode, this.feedUser, this.index});
 
   @override
   Widget build(BuildContext context) {
     final feedViewModel = Provider.of<FeedViewModel>(context, listen: false);
-    //todo　プロフィール画面から来た場合はUserの設定要る
-    feedViewModel.setFeedUser(feedMode, null);
+    feedViewModel.setFeedUser(feedMode, feedUser);
 
     Future(() => feedViewModel.getPosts(feedMode));
 
