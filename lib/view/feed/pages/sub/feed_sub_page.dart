@@ -4,13 +4,14 @@ import 'package:insta_clone/utils/constants.dart';
 import 'package:insta_clone/view/feed/components/feed_post_tile.dart';
 import 'package:insta_clone/view_models/feed_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class FeedSubPage extends StatelessWidget {
   final FeedMode feedMode;
   final User feedUser;
   final int index;
 
-  FeedSubPage({@required this.feedMode, this.feedUser, this.index});
+  FeedSubPage({@required this.feedMode, this.feedUser, @required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,8 @@ class FeedSubPage extends StatelessWidget {
         } else {
           return RefreshIndicator(
             onRefresh: () => feedViewModel.getPosts(feedMode),
-            child: ListView.builder(
+            child: ScrollablePositionedList.builder(
+              initialScrollIndex: index,
               physics: AlwaysScrollableScrollPhysics(),
               itemCount: model.posts.length,
               itemBuilder: (context, index) {
