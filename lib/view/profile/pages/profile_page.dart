@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/utils/constants.dart';
 import 'package:insta_clone/view/profile/components/profile_detail_part.dart';
+import 'package:insta_clone/view/profile/components/profile_posts_grid_part.dart';
 import 'package:insta_clone/view/profile/components/profile_setting_part.dart';
 import 'package:insta_clone/view_models/profile_view_model.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,9 @@ class ProfilePage extends StatelessWidget {
                   mode: profileMode,
                 ),
               ),
+            ),
+            ProfilePostsGridPart(
+              posts: model.posts
             )
           ],
         );
