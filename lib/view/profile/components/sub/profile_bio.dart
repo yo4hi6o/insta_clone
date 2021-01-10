@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/utils/constants.dart';
+import 'package:insta_clone/view/profile/screens/edit_profile_screen.dart';
 import 'package:insta_clone/view_models/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +39,8 @@ class ProfileBio extends StatelessWidget {
 
   _button(BuildContext context, User profileUser) {
     return RaisedButton(
+      //todo
+      onPressed: () => _openEditProfileScreen(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.0),
       ),
@@ -45,6 +48,13 @@ class ProfileBio extends StatelessWidget {
           ? Text(S.of(context).editProfile)
           //todo
           : Text("フォローする"),
+    );
+  }
+
+  _openEditProfileScreen(BuildContext context) {
+    Navigator.push(
+      context, MaterialPageRoute(builder: (_) => EditProfileScreen()
+    ),
     );
   }
 }
