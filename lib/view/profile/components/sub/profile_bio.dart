@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/generated/l10n.dart';
+import 'package:insta_clone/style.dart';
 import 'package:insta_clone/utils/constants.dart';
 import 'package:insta_clone/view/profile/screens/edit_profile_screen.dart';
 import 'package:insta_clone/view_models/profile_view_model.dart';
@@ -23,8 +24,7 @@ class ProfileBio extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(profileUser.inAppUserName),
-          //todo バイオ
-          Text("バイオ"),
+          Text(profileUser.bio, style: profileBioTextStyle,),
           SizedBox(
             height: 16.0,
           ),

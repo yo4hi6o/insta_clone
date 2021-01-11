@@ -108,4 +108,8 @@ class UserRepository {
 
     await dbManager.updateProfile(updateUser);
   }
+
+  Future<void> getCurrentUserById(String userId) async {
+    currentUser = await dbManager.getUserInfoFromDbById(userId);
+  }
 }

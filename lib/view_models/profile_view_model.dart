@@ -75,5 +75,13 @@ class ProfileViewModel extends ChangeNotifier {
       photoUrlUpdated,
       isImageFromFile,
     );
+
+    //更新後にユーザーデータを再取得をしてstaticに保存
+    await userRepository.getCurrentUserById(profileUser.userId);
+    profileUser = currentUser;
+
+    isProcessing = false;
+    notifyListeners();
+
   }
 }

@@ -57,57 +57,65 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 16.0,
-              ),
-              Center(
-                child: CirclePhoto(
-                  radius: 60.0,
-                  photoUrl: _photoUrl,
-                  isImageFromFile: _isImageFromFile,
-                ),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              Center(
-                child: InkWell(
-                  onTap: () => _pickNewProfileImage(),
-                  child: Text(
-                    S.of(context).changeProfilePhoto,
-                    style: changeProfilePhotoTextStyle,
+      body: Consumer<ProfileViewModel>(
+        builder: (_, model, child) {
+          return model.isProcessing
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 16.0,
+                        ),
+                        Center(
+                          child: CirclePhoto(
+                            radius: 60.0,
+                            photoUrl: _photoUrl,
+                            isImageFromFile: _isImageFromFile,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Center(
+                          child: InkWell(
+                            onTap: () => _pickNewProfileImage(),
+                            child: Text(
+                              S.of(context).changeProfilePhoto,
+                              style: changeProfilePhotoTextStyle,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 16.0,
+                        ),
+                        Text(
+                          "Name",
+                          style: editProfileTitleTextStyle,
+                        ),
+                        TextField(
+                          controller: _nameController,
+                        ),
+                        SizedBox(
+                          height: 16.0,
+                        ),
+                        Text(
+                          "Bio",
+                          style: editProfileTitleTextStyle,
+                        ),
+                        TextField(
+                          controller: _bioController,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 16.0,
-              ),
-              Text(
-                "Name",
-                style: editProfileTitleTextStyle,
-              ),
-              TextField(
-                controller: _nameController,
-              ),
-              SizedBox(
-                height: 16.0,
-              ),
-              Text(
-                "Bio",
-                style: editProfileTitleTextStyle,
-              ),
-              TextField(
-                controller: _bioController,
-              ),
-            ],
-          ),
-        ),
+                );
+        },
       ),
     );
   }
@@ -127,11 +135,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         Provider.of<ProfileViewModel>(context, listen: false);
 
     await profileViewModel.updateProfile(
-      _nameController.text,
-      _bioController.text,
-      _photoUrl,
-      _isImageFromFile
-    );
+        _nameController.text, _bioController.text, _photoUrl, _isImageFromFile);
 
     Navigator.pop(context);
   }

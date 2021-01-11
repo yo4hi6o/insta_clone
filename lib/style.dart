@@ -62,4 +62,8 @@ const editProfileTitleTextStyle = TextStyle(
     fontFamily: RegularFont, fontSize: 14.0,
 );
 
+const profileBioTextStyle = TextStyle(
+    fontFamily: RegularFont, fontSize: 12.0,
+);
+
 
