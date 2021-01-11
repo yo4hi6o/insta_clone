@@ -26,25 +26,26 @@ class UserRepository {
   Future<bool> signIn() async {
     try {
       GoogleSignInAccount signInAccount = await _googleSignIn.signIn();
-      GoogleSignInAuthentication signInAuthentication = await signInAccount
-          .authentication;
+      GoogleSignInAuthentication signInAuthentication =
+          await signInAccount.authentication;
 
       final auth.AuthCredential credential = auth.GoogleAuthProvider.credential(
         idToken: signInAuthentication.idToken,
-        accessToken: signInAuthentication.accessToken,);
+        accessToken: signInAuthentication.accessToken,
+      );
 
       final firebaseUser = (await _auth.signInWithCredential(credential)).user;
-      if (firebaseUser == null){
+      if (firebaseUser == null) {
         return false;
       }
 
       final isUserExistedInDb = await dbManager.searchUserInDb(firebaseUser);
-      if(!isUserExistedInDb){
+      if (!isUserExistedInDb) {
         await dbManager.insertUser(_convertToUser(firebaseUser));
       }
       currentUser = await dbManager.getUserInfoFromDbById(firebaseUser.uid);
       return true;
-    } catch(error){
+    } catch (error) {
       print("sign in error caught!: ${error.toString()}");
       return false;
     }
@@ -56,26 +57,36 @@ class UserRepository {
       displayName: firebaseUser.displayName,
       inAppUserName: firebaseUser.displayName,
       photoUrl: firebaseUser.photoURL,
-      email:firebaseUser.email,
+      email: firebaseUser.email,
       bio: "",
     );
   }
 
-  Future<User> getUserById(String userId) async{
+  Future<User> getUserById(String userId) async {
     return await dbManager.getUserInfoFromDbById(userId);
   }
 
-  Future<void> signOut() async{
+  Future<void> signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
     currentUser = null;
   }
 
-  Future<int> getNumberOfFollowers(User profileUser) async{
+  Future<int> getNumberOfFollowers(User profileUser) async {
     return (await dbManager.getFollowerUserIds(profileUser.userId)).length;
   }
 
   Future<int> getNumberOfFollowings(User profileUser) async {
-    return (await dbManager. getFollowingUserIds(profileUser.userId)).length;
+    return (await dbManager.getFollowingUserIds(profileUser.userId)).length;
+  }
+
+  Future<void> updateProfile(
+    User profileUser,
+    String nameUpdated,
+    String bioUpdated,
+    String photoUrlUpdated,
+    bool isImageFromFile,
+  ) async {
+    //todo
   }
 }

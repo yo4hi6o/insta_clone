@@ -8,9 +8,11 @@ import 'package:insta_clone/utils/constants.dart';
 class ProfileViewModel extends ChangeNotifier {
   final UserRepository userRepository;
   final PostRepository postRepository;
+
   ProfileViewModel({this.userRepository, this.postRepository});
 
   User profileUser;
+
   User get currentUser => UserRepository.currentUser;
 
   bool isProcessing = false;
@@ -25,7 +27,7 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> getPost() async{
+  Future<void> getPost() async {
     isProcessing = true;
     notifyListeners();
 
@@ -33,7 +35,6 @@ class ProfileViewModel extends ChangeNotifier {
 
     isProcessing = false;
     notifyListeners();
-
   }
 
   Future<void> signOut() async {
@@ -41,11 +42,12 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> getNumberOfPosts() async{
-    return (await postRepository.getPosts(FeedMode.FROM_PROFILE, profileUser)).length;
+  Future<int> getNumberOfPosts() async {
+    return (await postRepository.getPosts(FeedMode.FROM_PROFILE, profileUser))
+        .length;
   }
 
-  Future<int> getNumberOfFollowers() async{
+  Future<int> getNumberOfFollowers() async {
     return await userRepository.getNumberOfFollowers(profileUser);
   }
 
@@ -53,7 +55,25 @@ class ProfileViewModel extends ChangeNotifier {
     return await userRepository.getNumberOfFollowings(profileUser);
   }
 
-  Future<String> pickProfileImage() async{
+  Future<String> pickProfileImage() async {
     return (await postRepository.pickImage(UploadType.GALLERY)).path;
+  }
+
+  Future<void> updateProfile(
+    String nameUpdated,
+    String bioUpdated,
+    String photoUrlUpdated,
+    bool isImageFromFile,
+  ) async {
+    isProcessing = true;
+    notifyListeners();
+
+    await userRepository.updateProfile(
+      profileUser,
+      nameUpdated,
+      bioUpdated,
+      photoUrlUpdated,
+      isImageFromFile,
+    );
   }
 }

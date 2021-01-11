@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/style.dart';
 import 'package:insta_clone/view/common/components/circle_photo.dart';
+import 'package:insta_clone/view/common/dialog/confirm_dialog.dart';
 import 'package:insta_clone/view_models/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -23,8 +24,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final profileUser = profileViewModel.profileUser;
 
     _isImageFromFile = false;
-
     _photoUrl = profileUser.photoUrl;
+
+    _nameController.text = profileUser.inAppUserName;
+    _bioController.text = profileUser.bio;
 
     super.initState();
   }
@@ -40,9 +43,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         title: Text(S.of(context).editProfile),
         actions: [
           IconButton(
-              icon: Icon(Icons.done),
-              //todo
-              onPressed: null)
+            icon: Icon(Icons.done),
+            onPressed: () => showConfirmDialog(
+              context: context,
+              title: S.of(context).editProfile,
+              content: S.of(context).editProfileConfirm,
+              onConfirmed: (isConfirmed) {
+                if (isConfirmed) {
+                  _updateProfile(context);
+                }
+              },
+            ),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -108,5 +120,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     setState(() {
       _isImageFromFile = true;
     });
+  }
+
+  void _updateProfile(BuildContext context) async {
+    final profileViewModel =
+        Provider.of<ProfileViewModel>(context, listen: false);
+
+    await profileViewModel.updateProfile(
+      _nameController.text,
+      _bioController.text,
+      _photoUrl,
+      _isImageFromFile
+    );
+
+    Navigator.pop(context);
   }
 }
