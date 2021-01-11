@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/models/db/database_manager.dart';
+import 'package:uuid/uuid.dart';
 
 class UserRepository {
   final DatabaseManager dbManager;
@@ -87,6 +90,22 @@ class UserRepository {
     String photoUrlUpdated,
     bool isImageFromFile,
   ) async {
-    //todo
+    var updatePhotoUrl;
+
+    if (isImageFromFile) {
+      final updatePhotoFile = File(photoUrlUpdated);
+      final storagePath = Uuid().v1();
+      updatePhotoUrl =
+          await dbManager.uploadImageToStorage(updatePhotoFile, storagePath);
+    }
+
+    final userBeforeUpdate =
+        await dbManager.getUserInfoFromDbById(profileUser.userId);
+    final updateUser = userBeforeUpdate.copyWith(
+        inAppUserName: nameUpdated,
+        photoUrl: isImageFromFile ? updatePhotoUrl : userBeforeUpdate.photoUrl,
+        bio: bioUpdated);
+
+    await dbManager.updateProfile(updateUser);
   }
 }

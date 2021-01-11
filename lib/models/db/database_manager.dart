@@ -204,4 +204,9 @@ class DatabaseManager {
     final storageRef = FirebaseStorage.instance.ref().child(imageStoragePath);
     storageRef.delete();
   }
+
+  Future<void> updateProfile(User updateUser) async {
+    final reference = _db.collection("users").doc(updateUser.userId);
+    await reference.update(updateUser.toMap());
+  }
 }
