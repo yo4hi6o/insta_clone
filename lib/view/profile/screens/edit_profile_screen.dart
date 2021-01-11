@@ -12,14 +12,17 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   String _photoUrl = "";
+  bool _isImageFromFile = false;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _bioController = TextEditingController();
 
   @override
   void initState() {
-    final providerViewModel =
+    final profileViewModel =
         Provider.of<ProfileViewModel>(context, listen: false);
-    final profileUser = providerViewModel.profileUser;
+    final profileUser = profileViewModel.profileUser;
+
+    _isImageFromFile = false;
 
     _photoUrl = profileUser.photoUrl;
 
@@ -55,7 +58,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: CirclePhoto(
                   radius: 60.0,
                   photoUrl: _photoUrl,
-                  isImageFromFile: false,
+                  isImageFromFile: _isImageFromFile,
                 ),
               ),
               SizedBox(
@@ -63,8 +66,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               Center(
                 child: InkWell(
-                  //todo
-                  onTap: null,
+                  onTap: () => _pickNewProfileImage(),
                   child: Text(
                     S.of(context).changeProfilePhoto,
                     style: changeProfilePhotoTextStyle,
@@ -96,5 +98,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _pickNewProfileImage() async {
+    _isImageFromFile = false;
+    final profileViewModel =
+        Provider.of<ProfileViewModel>(context, listen: false);
+    _photoUrl = await profileViewModel.pickProfileImage();
+    setState(() {
+      _isImageFromFile = true;
+    });
   }
 }

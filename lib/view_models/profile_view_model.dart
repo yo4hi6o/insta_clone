@@ -53,4 +53,7 @@ class ProfileViewModel extends ChangeNotifier {
     return await userRepository.getNumberOfFollowings(profileUser);
   }
 
+  Future<String> pickProfileImage() async{
+    return (await postRepository.pickImage(UploadType.GALLERY)).path;
+  }
 }
