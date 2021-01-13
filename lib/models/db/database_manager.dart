@@ -8,6 +8,7 @@ import 'package:insta_clone/data_models/comments.dart';
 import 'package:insta_clone/data_models/like.dart';
 import 'package:insta_clone/data_models/post.dart';
 import 'package:insta_clone/data_models/user.dart';
+import 'package:insta_clone/models/repositories/user_repository.dart';
 
 class DatabaseManager {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -208,5 +209,23 @@ class DatabaseManager {
   Future<void> updateProfile(User updateUser) async {
     final reference = _db.collection("users").doc(updateUser.userId);
     await reference.update(updateUser.toMap());
+  }
+
+  Future<List<User>> searchUsers(String queryString) async {
+    final query = await _db.collection("users").orderBy("inAppUserName")
+        .startAt([queryString])
+        .endAt([queryString + "\uf8ff"])
+        .get();
+
+    if (query.docs.length == 0) return List();
+
+    var soughtUsers = List<User>();
+    query.docs.forEach((element) {
+      final selectedUser = User.fromMap(element.data());
+      if (selectedUser.userId != UserRepository.currentUser.userId) {
+        soughtUsers.add(selectedUser);
+      }
+    });
+    return soughtUsers;
   }
 }
