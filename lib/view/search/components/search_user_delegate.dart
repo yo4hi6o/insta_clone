@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/data_models/user.dart';
+import 'package:insta_clone/view_models/search_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SearchUserDelegate extends SearchDelegate<User> {
 
@@ -48,6 +50,9 @@ class SearchUserDelegate extends SearchDelegate<User> {
 
   //todo ユーザー検索処理
   Widget _buildResults(BuildContext context) {
+    final searchViewModel = Provider.of<SearchViewModel>(context,listen: false);
+    searchViewModel.searchUsers(query);
+
     return Container();
   }
 }
