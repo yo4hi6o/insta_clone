@@ -116,4 +116,8 @@ class UserRepository {
   Future<List<User>> searchUser(String query) async {
     return dbManager.searchUsers(query);
   }
+
+  Future<void> follow(User profileUser) async{
+    await dbManager.follow(profileUser, currentUser);
+  }
 }

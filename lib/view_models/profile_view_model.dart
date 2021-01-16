@@ -86,4 +86,10 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
 
   }
+
+  Future<void> follow() async{
+    await userRepository.follow(profileUser);
+    isFollowingProfileUser = true;
+    notifyListeners();
+  }
 }

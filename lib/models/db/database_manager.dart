@@ -228,4 +228,16 @@ class DatabaseManager {
     });
     return soughtUsers;
   }
+
+  Future<void> follow(User profileUser, User currentUser) async{
+    //CurrentUserにとってのfollowing
+    await _db.collection("users").doc(currentUser.userId)
+        .collection("followings").doc(profileUser.userId)
+        .set({"userId": profileUser.userId});
+
+    //profileUserにとってのfollowers
+    await _db.collection("users").doc(profileUser.userId)
+        .collection("followers").doc(currentUser.userId)
+        .set({"userId": currentUser.userId});
+  }
 }
