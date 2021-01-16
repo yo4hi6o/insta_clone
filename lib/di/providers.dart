@@ -63,6 +63,12 @@ List<SingleChildWidget> viewModels = [
       postRepository: Provider.of<PostRepository>(context, listen: false),
     ),
   ),
+  ChangeNotifierProvider<ProfileViewModel>(
+    create: (context) => ProfileViewModel(
+      userRepository: Provider.of<UserRepository>(context, listen: false),
+      postRepository: Provider.of<PostRepository>(context, listen: false),
+    ),
+  ),
   ChangeNotifierProvider<SearchViewModel>(
     create: (context) => SearchViewModel(
       userRepository: Provider.of<UserRepository>(context, listen: false),
