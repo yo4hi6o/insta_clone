@@ -80,5 +80,10 @@ class ProfileBio extends StatelessWidget {
   }
 
   //todo フォローをやめる
-  _unFollow(BuildContext context) {}
+  _unFollow(BuildContext context) {
+    final profileViewModel =
+    Provider.of<ProfileViewModel>(context, listen: false);
+    profileViewModel.unFollow();
+
+  }
 }

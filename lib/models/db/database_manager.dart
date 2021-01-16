@@ -257,5 +257,17 @@ class DatabaseManager {
         return false;
     }
     }
+
+  Future<bool> unFollow(User profileUser, User currentUser) async{
+    //CurrentUserのfollowingsからの削除
+    await _db.collection("users").doc(currentUser.userId)
+        .collection("followings").doc(profileUser.userId)
+        .delete();
+
+    //ProfileUserのfollowersからの削除
+    await _db.collection("users").doc(profileUser.userId)
+        .collection("followers").doc(currentUser.userId)
+        .delete();
+  }
   }
 
