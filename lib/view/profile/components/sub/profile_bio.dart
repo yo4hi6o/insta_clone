@@ -24,7 +24,10 @@ class ProfileBio extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(profileUser.inAppUserName),
-          Text(profileUser.bio, style: profileBioTextStyle,),
+          Text(
+            profileUser.bio,
+            style: profileBioTextStyle,
+          ),
           SizedBox(
             height: 16.0,
           ),
@@ -38,23 +41,39 @@ class ProfileBio extends StatelessWidget {
   }
 
   _button(BuildContext context, User profileUser) {
+    final profileViewModel =
+        Provider.of<ProfileViewModel>(context, listen: false);
+    final isFollowing = profileViewModel.isFollowingProfileUser;
+
     return RaisedButton(
-      //todo
-      onPressed: () => _openEditProfileScreen(context),
+      onPressed: () {
+        mode == ProfileMode.MYSELF
+            ? _openEditProfileScreen(context)
+            : isFollowing
+                ? _unFollow(context)
+                : _follow(context);
+      },
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: mode == ProfileMode.MYSELF
           ? Text(S.of(context).editProfile)
-          //todo
-          : Text("フォローする"),
+          : isFollowing
+              ? Text(S.of(context).unFollow)
+              : Text(S.of(context).follow),
     );
   }
 
   _openEditProfileScreen(BuildContext context) {
     Navigator.push(
-      context, MaterialPageRoute(builder: (_) => EditProfileScreen()
-    ),
+      context,
+      MaterialPageRoute(builder: (_) => EditProfileScreen()),
     );
   }
+
+  //todo フォローする
+  _follow(BuildContext context) {}
+
+  //todo フォローをやめる
+  _unFollow(BuildContext context) {}
 }

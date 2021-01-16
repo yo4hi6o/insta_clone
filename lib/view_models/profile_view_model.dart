@@ -17,6 +17,8 @@ class ProfileViewModel extends ChangeNotifier {
 
   bool isProcessing = false;
 
+  bool isFollowingProfileUser = false;
+
   List<Post> posts = List();
 
   void setProfileUser(ProfileMode profileMode, User selectedUser) {
