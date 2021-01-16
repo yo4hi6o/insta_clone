@@ -26,6 +26,7 @@ class ProfileViewModel extends ChangeNotifier {
       profileUser = currentUser;
     } else {
       profileUser = selectedUser;
+      checkIsFollowing();
     }
   }
 
@@ -90,6 +91,11 @@ class ProfileViewModel extends ChangeNotifier {
   Future<void> follow() async{
     await userRepository.follow(profileUser);
     isFollowingProfileUser = true;
+    notifyListeners();
+  }
+
+  Future<void> checkIsFollowing() async{
+    isFollowingProfileUser = await userRepository.checkIsFollowing(profileUser);
     notifyListeners();
   }
 }

@@ -30,7 +30,7 @@ class DatabaseManager {
 
   Future<User> getUserInfoFromDbById(String userId) async {
     final query =
-        await _db.collection("users").where("userId", isEqualTo: userId).get();
+    await _db.collection("users").where("userId", isEqualTo: userId).get();
     return User.fromMap(query.docs[0].data());
   }
 
@@ -102,7 +102,7 @@ class DatabaseManager {
 
   Future<List<String>> getFollowerUserIds(String userId) async {
     final query =
-        await _db.collection("users").doc(userId).collection("followers").get();
+    await _db.collection("users").doc(userId).collection("followers").get();
     if (query.docs.length == 0) return List();
     var userIds = List<String>();
     query.docs.forEach((id) {
@@ -195,7 +195,7 @@ class DatabaseManager {
 
     //Likes
     final likeRef =
-        await _db.collection("likes").where("postId", isEqualTo: postId).get();
+    await _db.collection("likes").where("postId", isEqualTo: postId).get();
     likeRef.docs.forEach((element) async {
       final ref = _db.collection("likes").doc(element.id);
       await ref.delete();
@@ -229,7 +229,7 @@ class DatabaseManager {
     return soughtUsers;
   }
 
-  Future<void> follow(User profileUser, User currentUser) async{
+  Future<void> follow(User profileUser, User currentUser) async {
     //CurrentUserにとってのfollowing
     await _db.collection("users").doc(currentUser.userId)
         .collection("followings").doc(profileUser.userId)
@@ -240,4 +240,22 @@ class DatabaseManager {
         .collection("followers").doc(currentUser.userId)
         .set({"userId": currentUser.userId});
   }
-}
+
+  Future<bool> checkIsFollowing(User profileUser, User currentUser) async {
+    final query = await _db.collection("users")
+        .doc(currentUser.userId)
+        .collection("followings")
+        .get();
+    if (query.docs.length == 0) return false;
+    final checkQuery = await _db.collection("users")
+        .doc(currentUser.userId)
+        .collection("followings")
+        .where("userId",isEqualTo: profileUser.userId).get();
+    if (checkQuery.docs.length > 0) {
+      return true;
+    } else {
+        return false;
+    }
+    }
+  }
+
