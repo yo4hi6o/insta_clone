@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/utils/constants.dart';
+import 'package:insta_clone/view_models/who_cares_me_view_model.dart';
+import 'package:provider/provider.dart';
 
 class WhoCaresMeScreen extends StatelessWidget {
   final WhoCaresMeMode mode;
@@ -10,6 +12,10 @@ class WhoCaresMeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final whoCaresMeViewModel =
+        Provider.of<WhoCaresMeViewModel>(context, listen: false);
+    Future(() => whoCaresMeViewModel.getCaresMeUsers(id,mode));
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_titleText(context, mode)),

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/models/db/database_manager.dart';
+import 'package:insta_clone/utils/constants.dart';
 import 'package:uuid/uuid.dart';
 
 class UserRepository {
@@ -127,5 +128,20 @@ class UserRepository {
 
   Future<void> unFollow(User profileUser) async{
     await dbManager.unFollow(profileUser, currentUser);
+  }
+
+  Future<void> getCaresMeUsers(String id, WhoCaresMeMode mode) async{
+    var results = List<User>();
+
+    //todo
+    switch(mode) {
+      case WhoCaresMeMode.LIKE:
+        break;
+      case WhoCaresMeMode.FOLLOWINGS:
+        break;
+      case WhoCaresMeMode.FOLLOWED:
+        break;
+    }
+    return results;
   }
 }
