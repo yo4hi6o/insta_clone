@@ -100,6 +100,24 @@ class DatabaseManager {
     return userIds;
   }
 
+  Future<List<User>>getLikesUsers(String postId) async{
+    final query = await _db.collection("likes").where("postId",isEqualTo: postId).get();
+    if (query.docs.length == 0) return List();
+    var userIds = List<String>();
+    query.docs.forEach((id) {
+      userIds.add(id.data()["likeUserId"]);
+    });
+    var likesUsers = List<User>();
+    await Future.forEach(userIds, (userId) async{
+      final user = await getUserInfoFromDbById(userId);
+      likesUsers.add(user);
+      return null;
+    });
+    print("誰がいいねしたか？: $likesUsers");
+    return likesUsers;
+
+  }
+
   Future<List<String>> getFollowerUserIds(String userId) async {
     final query =
     await _db.collection("users").doc(userId).collection("followers").get();
@@ -269,5 +287,7 @@ class DatabaseManager {
         .collection("followers").doc(currentUser.userId)
         .delete();
   }
+
+
   }
 

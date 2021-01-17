@@ -130,12 +130,14 @@ class UserRepository {
     await dbManager.unFollow(profileUser, currentUser);
   }
 
-  Future<void> getCaresMeUsers(String id, WhoCaresMeMode mode) async{
+  Future<List> getCaresMeUsers(String id, WhoCaresMeMode mode) async{
     var results = List<User>();
 
     //todo
     switch(mode) {
       case WhoCaresMeMode.LIKE:
+        final postId = id;
+        results = await dbManager.getLikesUsers(postId);
         break;
       case WhoCaresMeMode.FOLLOWINGS:
         break;
