@@ -6,8 +6,10 @@ import 'package:insta_clone/data_models/user.dart';
 import 'package:insta_clone/generated/l10n.dart';
 import 'package:insta_clone/style.dart';
 import 'package:insta_clone/view/common/comments_screen.dart';
+import 'package:insta_clone/view/who_cares_me/screens/who_cares_me_screen.dart';
 import 'package:insta_clone/view_models/feed_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:insta_clone/utils/constants.dart';
 
 class FeedPostLikesPart extends StatelessWidget {
   final Post post;
@@ -49,11 +51,14 @@ class FeedPostLikesPart extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    likeResult.likes.length.toString() +
-                        " " +
-                        S.of(context).likes,
-                    style: numberOfLikesTextStyle,
+                  GestureDetector(
+                    onTap: () => _checkLikesUsers(context),
+                    child: Text(
+                      likeResult.likes.length.toString() +
+                          " " +
+                          S.of(context).likes,
+                      style: numberOfLikesTextStyle,
+                    ),
                   ),
                 ]);
           } else {
@@ -84,5 +89,17 @@ class FeedPostLikesPart extends StatelessWidget {
   _unLikeIt(BuildContext context) async {
     final feedViewModel = Provider.of<FeedViewModel>(context, listen: false);
     await feedViewModel.unLikeIt(post);
+  }
+
+  _checkLikesUsers(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => WhoCaresMeScreen(
+          mode: WhoCaresMeMode.LIKE,
+          id: post.postId,
+        ),
+      ),
+    );
   }
 }
