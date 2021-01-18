@@ -5,23 +5,52 @@ const TitleFont = "Billabong";
 const RegularFont = "NotoSansJP-Medium";
 const BoldFont = "NotoSansJP-Bold";
 
+//テーマ
+final darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  buttonColor: Colors.white30,
+  primaryIconTheme: IconThemeData(
+    color: Colors.white,
+  ),
+  iconTheme: IconThemeData(
+    color: Colors.white,
+  ),
+  fontFamily: RegularFont,
+);
+
+final lightTheme = ThemeData(
+  primaryColor: Colors.white,
+  brightness: Brightness.light,
+  buttonColor: Colors.white,
+  primaryIconTheme: IconThemeData(
+    color: Colors.black,
+  ),
+  iconTheme: IconThemeData(
+    color: Colors.black,
+  ),
+  fontFamily: RegularFont,
+);
+
+
+
 //Login
-const loginTitleTextStyle = TextStyle(fontFamily: TitleFont,fontSize: 48.0);
+const loginTitleTextStyle = TextStyle(fontFamily: TitleFont, fontSize: 48.0);
 
 //Post
-const postCaptionTextStyle = TextStyle(fontFamily: RegularFont,fontSize: 14.0);
-const postLocationTextStyle = TextStyle(fontFamily: RegularFont,fontSize: 16.0);
+const postCaptionTextStyle = TextStyle(fontFamily: RegularFont, fontSize: 14.0);
+const postLocationTextStyle = TextStyle(
+    fontFamily: RegularFont, fontSize: 16.0);
 
 //feed
 const userCardTitleTextStyle = TextStyle(
-  fontFamily: BoldFont, fontSize: 14.0
+    fontFamily: BoldFont, fontSize: 14.0
 );
 const userCardSubTitleTextStyle = TextStyle(
-  fontFamily: RegularFont, fontSize: 12.0
+    fontFamily: RegularFont, fontSize: 12.0
 );
 
 const numberOfLikesTextStyle = TextStyle(
-  fontFamily: RegularFont, fontSize: 12.0
+    fontFamily: RegularFont, fontSize: 12.0
 );
 
 const numberOfCommentsTextStyle = TextStyle(
@@ -59,11 +88,11 @@ const changeProfilePhotoTextStyle = TextStyle(
 );
 
 const editProfileTitleTextStyle = TextStyle(
-    fontFamily: RegularFont, fontSize: 14.0,
+  fontFamily: RegularFont, fontSize: 14.0,
 );
 
 const profileBioTextStyle = TextStyle(
-    fontFamily: RegularFont, fontSize: 12.0,
+  fontFamily: RegularFont, fontSize: 12.0,
 );
 
 //Search

@@ -100,7 +100,7 @@ class DatabaseManager {
     return userIds;
   }
 
-  Future<List<User>>getLikesUsers(String postId) async{
+  Future<List<User>> getLikesUsers(String postId) async{
     final query = await _db.collection("likes").where("postId",isEqualTo: postId).get();
     if (query.docs.length == 0) return List();
     var userIds = List<String>();

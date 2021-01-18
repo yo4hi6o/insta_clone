@@ -43,17 +43,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
 
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        buttonColor: Colors.white30,
-        primaryIconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
-        fontFamily: RegularFont,
-      ),
+      theme: lightTheme,
       home: FutureBuilder(
         future: loginViewModel.isSingIn(),
         builder: (context, AsyncSnapshot<bool>snapshot) {
