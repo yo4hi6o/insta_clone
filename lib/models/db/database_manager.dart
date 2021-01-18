@@ -111,7 +111,6 @@ class DatabaseManager {
     await Future.forEach(userIds, (userId) async{
       final user = await getUserInfoFromDbById(userId);
       likesUsers.add(user);
-      return null;
     });
     print("誰がいいねしたか？: $likesUsers");
     return likesUsers;
