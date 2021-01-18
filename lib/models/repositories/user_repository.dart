@@ -139,9 +139,13 @@ class UserRepository {
         final postId = id;
         results = await dbManager.getLikesUsers(postId);
         break;
-      case WhoCaresMeMode.FOLLOWINGS:
-        break;
       case WhoCaresMeMode.FOLLOWED:
+        final profileUserId = id;
+        results = await dbManager.getFollowerUsers(profileUserId);
+        break;
+      case WhoCaresMeMode.FOLLOWINGS:
+        final profileUserId = id;
+        results = await dbManager.getFollowingUsers(profileUserId);
         break;
     }
     return results;

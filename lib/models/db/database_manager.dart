@@ -287,6 +287,26 @@ class DatabaseManager {
         .delete();
   }
 
+  Future<List<User>> getFollowerUsers(String profileUserId) async{
+    final followerUserIds = await getFollowerUserIds(profileUserId);
+    var followerUsers = List<User>();
+    await Future.forEach(followerUserIds, (followerUserId) async{
+      final user = await getUserInfoFromDbById(followerUserId);
+      followerUsers.add(user);
+    });
+    return followerUsers;
+  }
+
+  Future<List<User>> getFollowingUsers(String profileUserId) async{
+    final followingUserIds = await getFollowingUserIds(profileUserId);
+    var followingUsers = List<User>();
+    await Future.forEach(followingUserIds, (followingUserId) async{
+      final user = await getUserInfoFromDbById(followingUserId);
+      followingUsers.add(user);
+    });
+    return followingUsers;
+  }
+
 
   }
 
