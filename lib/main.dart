@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:insta_clone/di/providers.dart';
+import 'package:insta_clone/models/repositories/theme_change_repository.dart';
 import 'package:insta_clone/view/search/pages/home_screen.dart';
 import 'package:insta_clone/style.dart';
 import 'package:insta_clone/view/login/screens/login_screen.dart';
@@ -14,6 +15,9 @@ import 'generated/l10n.dart';
 import 'package:timeago/timeago.dart' as timeAgo;
 
 void main() async {
+
+  final themeChangeRepository = ThemeChangeRepository();
+  await themeChangeRepository.getIsDarkOn();
 
   timeAgo.setLocaleMessages("ja", timeAgo.JaMessages());
 

@@ -5,9 +5,18 @@ const PREF_KEY = "isDarkOn";
 
 class ThemeChangeRepository {
 
-  Future<void> setTheme(bool isDarkOn) async{
+  static bool isDarkOn = false;
+
+  Future<void> setTheme(bool isDark) async{
     final prefs = await SharedPreferences.getInstance();
-    prefs.setBool(PREF_KEY, isDarkOn);
+    await prefs.setBool(PREF_KEY, isDark);
+    isDarkOn = isDark;
+
+  }
+
+  Future<void> getIsDarkOn() async {
+    final prefs = await SharedPreferences.getInstance();
+    isDarkOn = prefs.getBool(PREF_KEY) ?? true;
 
   }
 

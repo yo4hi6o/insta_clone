@@ -6,13 +6,12 @@ class ThemeChangeViewModel extends ChangeNotifier {
   final ThemeChangeRepository repository;
   ThemeChangeViewModel({this.repository});
 
-  bool isDarkOn = true;
+  bool get isDarkOn => ThemeChangeRepository.isDarkOn;
 
   ThemeData get selectedTheme => isDarkOn ? darkTheme : lightTheme;
 
   void setTheme(bool isDark) async {
     await repository.setTheme(isDark);
-    isDarkOn = isDark;
     notifyListeners();
   }
 }
