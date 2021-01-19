@@ -14,7 +14,7 @@ class ProfileSettingPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeChangeViewModel =
-        Provider.of<ThemeChangeViewModel>(context, listen: false);
+        Provider.of<ThemeChangeViewModel>(context);
     final isDarkOn = themeChangeViewModel.isDarkOn;
 
     return PopupMenuButton(
