@@ -16,6 +16,8 @@ import 'package:timeago/timeago.dart' as timeAgo;
 
 void main() async {
 
+  WidgetsFlutterBinding.ensureInitialized();
+
   final themeChangeRepository = ThemeChangeRepository();
   await themeChangeRepository.getIsDarkOn();
 
