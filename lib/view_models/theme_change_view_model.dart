@@ -7,7 +7,8 @@ class ThemeChangeViewModel extends ChangeNotifier {
 
   bool isDarkOn = true;
 
-  void setTheme(bool isDarkOn) {
-    repository.setTheme(isDarkOn);
+  void setTheme(bool isDark) async {
+    await repository.setTheme(isDark);
+    isDarkOn = isDark;
   }
 }
